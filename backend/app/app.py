@@ -19,7 +19,7 @@ app.config['MYSQL_DB'] = 'cs353hw4db'
 
 mysql = MySQL(app)
 
-# seksomanyak = yani ben
+
 @app.route('/')
 @app.route('/data', methods=['GET'])
 def get_time():
