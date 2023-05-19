@@ -4,180 +4,167 @@ CREATE TABLE User (
 	password VARCHAR(40),
 	fullname VARCHAR(255),
 	address VARCHAR(255),
-	birth-year INT,
+	birth_year INT,
 	role VARCHAR(40),
 	PRIMARY KEY(TCK)
 );
+CREATE TABLE Hospital (
+	hospital_id INT,
+	name VARCHAR(40),
+	city VARCHAR(40),
+	PRIMARY KEY(hospital_id),
+);
 CREATE TABLE Doctor (
 	TCK INT,
-	expertise-field VARCHAR(40),
-	hospital-id INT,
+	expertise_field VARCHAR(40),
+	hospital_id INT,
 	PRIMARY KEY(TCK),
 	FOREIGN KEY(hospital_id) references Hospital,
 	FOREIGN KEY(TCK) references User
 );
 CREATE TABLE Admin (
-	admin-id INT,
-	PRIMARY KEY(admin-id),
-	FOREIGN KEY(admin-id) references User
+	admin_id INT,
+	PRIMARY KEY(admin_id),
+	FOREIGN KEY(admin_id) references User
 );
 CREATE TABLE Patient (
 	TCK INT,
 	expertise-field VARCHAR(40),
-	hospital-id INT,
+	hospital_id INT,
 	PRIMARY KEY(TCK),
 	FOREIGN KEY(hospital_id) references Hospital,
 	FOREIGN KEY(TCK) references User
 );
-CREATE TABLE Hospital (
-	hospital-id INT,
-	name VARCHAR(40),
-	city VARCHAR(40),
-	PRIMARY KEY(hospital-id),
-);
 CREATE TABLE BankAccount (
-	back-account-no INT,
-	bank-account-password VARCHAR(40),
+	back_account_no INT,
+	bank_account_password VARCHAR(40),
 	active VARCHAR(40),
-	PRIMARY KEY(bank-account-no),
+	PRIMARY KEY(bank_account_no),
 );
 CREATE TABLE Prescription (
-	presc-id INT,
+	presc_id INT,
 	date datetime(40),
-	PRIMARY KEY(presc-id),
+	PRIMARY KEY(presc_id),
 );
 CREATE TABLE Prescribes (
-	doctor-TCK INT,
-	patient-TCK INT,
-	presc-id INT,
-	PRIMARY KEY(doctor-TCK, patient-TCK, presc-id),
-	FOREIGN KEY(doctor-TCK, patient-TCK) references User
-	FOREIGN KEY(presc-id) references Prescription
+	doctor_TCK INT,
+	patient_TCK INT,
+	presc_id INT,
+	PRIMARY KEY(doctor_TCK, patient_TCK, presc_id),
+	FOREIGN KEY(doctor_TCK, patient_TCK) references User
+	FOREIGN KEY(presc_id) references Prescription
 );
 CREATE TABLE Illness (
-	illness-name VARCHAR(40),
+	illness_name VARCHAR(40),
 	type VARCHAR(40),
-	PRIMARY KEY(illness-name),
+	PRIMARY KEY(illness_name),
 );
 CREATE TABLE HasIllness (
-	patient-TCK INT,
-	illness-name VARCHAR(40),
-	PRIMARY KEY(patient-TCK, illness-name),
-	FOREIGN KEY(patient-TCK) references Patient,
-	FOREIGN KEY(illness-name) references Illness
+	patient_TCK INT,
+	illness_name VARCHAR(40),
+	PRIMARY KEY(patient_TCK, illness_name),
+	FOREIGN KEY(patient_TCK) references Patient,
+	FOREIGN KEY(illness_name) references Illness
+);
+CREATE TABLE PharmaceuticalWarehouse (
+	warehouse_id INT NOT NULL,
+	warehouse_name VARCHAR(40),
+	warehouse_city VARCHAR(40),
+	PRIMARY KEY(warehouse_id)
 );
 CREATE TABLE PharmaceuticalWarehouseWorker (
 	TCK INT NOT NULL,
-	warehouse-id INT,
+	warehouse_id INT,
 	PRIMARY KEY(TCK),
 	FOREIGN KEY(TCK) references User
-	FOREIGN KEY(warehouse-id) references PharmaceuticalWarehouse
+	FOREIGN KEY(warehouse_id) references PharmaceuticalWarehouse
 );
-CREATE TABLE PharmaceuticalWarehouse (
-	warehouse-id INT NOT NULL,
-	warehouse-name VARCHAR(40),
-	warehouse-city VARCHAR(40),
-	PRIMARY KEY(warehouse-id)
-);
+
 CREATE TABLE Pharmacy (
-	pharmacy-id INT NOT NULL,
-	pharm-name VARCHAR(255),
-	pharm-city VARCHAR(40),
-	PRIMARY KEY(pharmacy-id)
+	pharmacy_id INT NOT NULL,
+	pharm_name VARCHAR(255),
+	pharm_city VARCHAR(40),
+	PRIMARY KEY(pharmacy_id)
 );
 CREATE TABLE Pharmacist (
 	TCK INT NOT NULL,
-	pharmacy-id INT,
+	pharmacy_id INT,
 	PRIMARY KEY(TCK),
-	FOREIGN KEY(pharmacy-id) references Pharmacy,
+	FOREIGN KEY(pharmacy_id) references Pharmacy,
 	FOREIGN KEY(TCK) references User
 );
 CREATE TABLE Drug(
-	drug-id INT NOT NULL,
+	drug_id INT NOT NULL,
 name VARCHAR(255) NOT NULL,
-needs-prescription VARCHAR(255),
-drug-class VARCHAR(255),
-drug-type VARCHAR(255),
+needs_prescription VARCHAR(255),
+drug_class VARCHAR(255),
+drug_type VARCHAR(255),
 price INT,
-PRIMARY KEY(drug-id)
+PRIMARY KEY(drug_id)
 );
 CREATE TABLE Restocks (
-	pharmacist-TCK INT,
-	warehouse-id INT,
-	drug-id INT,
-	restock-date DATETIME
-	PRIMARY KEY(pharmacist-TCK, warehouse-id, drug-id),
-	FOREIGN KEY(pharmacist-TCK) references Pharmacist,
-	FOREIGN KEY(warehouse-id) references Warehouse,
-	FOREIGN KEY(drug-id) references Drug
+	pharmacist_TCK INT,
+	warehouse_id INT,
+	drug_id INT,
+	restock_date DATETIME
+	PRIMARY KEY(pharmacist_TCK, warehouse_id, drug_id),
+	FOREIGN KEY(pharmacist_TCK) references Pharmacist,
+	FOREIGN KEY(warehouse_id) references Warehouse,
+	FOREIGN KEY(drug_id) references Drug
 );
 CREATE TABLE HasDrug(
-	drug-id INT NOT NULL,
-	pharmacy-id INT NOT NULL,
-	PRIMARY KEY(drug-id,pharmacy-id),
-	FOREIGN KEY(drug-id) references Drug,
-	FOREIGN KEY(pharmacy-id) references Pharmacy
+	drug_id INT NOT NULL,
+	pharmacy_id INT NOT NULL,
+	PRIMARY KEY(drug_id,pharmacy_id),
+	FOREIGN KEY(drug_id) references Drug,
+	FOREIGN KEY(pharmacy_id) references Pharmacy
 );
 CREATE TABLE SideEffect(
-effect-name VARCHAR(255) NOT NULL,
-	drug-id INT NOT NULL,
-	INTensity INT,
-PRIMARY KEY(effect-name),
-FOREIGN KEY(drug-id) references Drug
+effect_name VARCHAR(255) NOT NULL,
+	drug_id INT NOT NULL,
+	intensity INT,
+PRIMARY KEY(effect_name),
+FOREIGN KEY(drug_id) references Drug
 );
 CREATE TABLE Dosage(
-	age-group VARCHAR(255) NOT NULL,
-	no-per-day INT NOT NULL,
-	dosage-per-use INT NOT NULL,
-	PRIMARY KEY(age-group, no-per-day, dosage-per-use)
+	age_group VARCHAR(255) NOT NULL,
+	no_per_day INT NOT NULL,
+	dosage_per_use INT NOT NULL,
+	PRIMARY KEY(age_group, no_per_day, dosage_per_use)
 );
 CREATE TABLE Orders(
-	bank-account-no INT,
-	patient-TCK INT,
-	drug-id INT,
-	order-date datetime,
+	bank_account_no INT,
+	patient_TCK INT,
+	drug_id INT,
+	order_date datetime,
 	status VARCHAR(40),
-	PRIMARY KEY( bank-account-no, drug-id, patient-TCK),
-	FOREIGN KEY(bank-account-no) references BankAccount,
-	FOREIGN KEY(patient-TCK) references Patient,
-	FOREIGN KEY(drug-id) references Drug
+	PRIMARY KEY( bank_account_no, drug_id, patient_TCK),
+	FOREIGN KEY(bank_account_no) references BankAccount,
+	FOREIGN KEY(patient_TCK) references Patient,
+	FOREIGN KEY(drug_id) references Drug
 );
 CREATE TABLE Contains(
-	presc-id INT,
-	drug-id INT ,
-	PRIMARY KEY(presc-id, drug-id),
-	FOREIGN KEY(presc-id) references Prescription,
-	FOREIGN KEY(drug-name) references Drug
+	presc_id INT,
+	drug_id INT ,
+	PRIMARY KEY(presc_id, drug_id),
+	FOREIGN KEY(presc_id) references Prescription,
+	FOREIGN KEY(drug_name) references Drug
 );
 CREATE TABLE HasBankAccount(
-	bank-account-no INT,
-	patient-TCK INT,
-	PRIMARY KEY(bank-account-no, patient-TCK),
-	FOREIGN KEY(bank-account-no) references BankAccount,
-	FOREIGN KEY(patient-TCK) references Patient
+	bank_account_no INT,
+	patient_TCK INT,
+	PRIMARY KEY(bank_account_no, patient_TCK),
+	FOREIGN KEY(bank_account_no) references BankAccount,
+	FOREIGN KEY(patient_TCK) references Patient
 );
 CREATE TABLE HasDosage(
-	drug-id INT NOT NULL,
-	age-group VARCHAR(255) NOT NULL,
-	no-per-day INT NOT NULL,
-	dosage-per-use INT NOT NULL,
-PRIMARY KEY(drug-id, age-group, no-per-day, dosage-per-use)
-	FOREIGN KEY(age-group, no-per-day, dosage-per-use) references Dosage,
-	FOREIGN KEY(drug-id) references Drug
+	drug_id INT NOT NULL,
+	age_group VARCHAR(255) NOT NULL,
+	no_per_day INT NOT NULL,
+	dosage_per_use INT NOT NULL,
+PRIMARY KEY(drug_id, age_group, no_per_day, dosage_per_use)
+	FOREIGN KEY(age_group, no_per_day, dosage_per_use) references Dosage,
+	FOREIGN KEY(drug_id) references Drug
 );
 
-CREATE VIEW patient-age as
-SELECT TCK, TIMESTAMPDIFF (YEAR, birth_year,NOW()) AS age
-FROM Patient
-
-CREATE VIEW drug-count as
-SELECT name, count(*) AS cnt
-FROM Has-Drug
-GROUP BY name
-WHERE pharmacy-id = $pharmacy-id
-
-CREATE VIEW patient-order AS
-SELECT name, order-date, status
-FROM Orders NATURAL JOIN Drug
-WHERE patient-TCK = $patient-TCK
 
