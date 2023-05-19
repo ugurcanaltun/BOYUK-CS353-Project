@@ -1,4 +1,0 @@
-Flask==2.2.2
-mysqlclient
-flask_mysqldb
-flask-cors
