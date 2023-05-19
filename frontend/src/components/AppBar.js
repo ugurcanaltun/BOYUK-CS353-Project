@@ -57,7 +57,7 @@ export default function AppNavbar(props) {
                 noWrap
                 sx={{ flexGrow: 1 }}
                 >
-                    Dashboard
+                    PharmHub
                 </Typography>
             </Toolbar>
         </AppBar>
