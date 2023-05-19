@@ -19,7 +19,6 @@ app.config['MYSQL_DB'] = 'cs353hw4db'
 
 mysql = MySQL(app)
 
-deneme = "deneme commit"
 
 @app.route('/')
 @app.route('/data', methods=['GET'])
