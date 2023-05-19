@@ -1,47 +1,12 @@
-// Importing modules
-import React, { useState, useEffect } from "react";
-import "./App.css";
-  
+import * as React from 'react';
+import './App.css';
+import HomeScreen from './screens/HomeScreen';
+
 function App() {
-    // usestate for setting a javascript
-    // object for storing and using data
-    const [data, setdata] = useState({
-        name: "",
-        age: 0,
-        date: "",
-        programming: "",
-    });
-  
-    // Using useEffect for single rendering
-    useEffect(() => {
-        // Using fetch to fetch the api from 
-        // flask server it will be redirected to proxy
-        fetch("http://localhost:5000/data").then((res) =>
-            res.json().then((data) => {
-              
-              setdata({
-                    name: data.Name,
-                    age: data.Age,
-                    date: data.Date,
-                    programming: data.programming,
-                });
-            })
-        );
-    }, []);
-  
     return (
-        <div className="App">
-            <header className="App-header">
-                <h1>Pompa</h1>
-                {/* Calling a data from setdata for showing */}
-                <p>{data.name}</p>
-                <p>{data.age}</p>
-                <p>{data.date}</p>
-                <p>{data.programming}</p>
-  
-            </header>
-        </div>
+        <HomeScreen/>
     );
-}
+  }
   
-export default App;
+  export default App;
+  
