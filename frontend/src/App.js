@@ -6,7 +6,6 @@ import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen';
 import AddNewDrugScreen from './screens/AddNewDrugScreen';
 import AdminScreen from './screens/AdminScreen';
-import ListMedicinesScreen from './screens/ListMedicinesScreen';
 import MyPrescriptionScreen from './screens/MyPrescriptionsScreen';
 import PastOrdersScreen from './screens/PastOrdersScreen';
 import PharmaciesScreen from './screens/PharmaciesScreen';
