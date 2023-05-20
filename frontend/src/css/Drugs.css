@@ -59,16 +59,19 @@
 }
 
 .drug-card {
+    align-items: center;
+    justify-content: center;
     margin-top: 20px;
     margin-right: 10px;
     padding: 10px;
     border-radius: 10px;
     background-color: aqua;
-    width: 7em;
+    width: 8.5em;
 }
 
 .cart-section {
     border: 1px solid black;
+    width: 80%;
     border-radius: 10px;
     display: flex;
     align-items: center;

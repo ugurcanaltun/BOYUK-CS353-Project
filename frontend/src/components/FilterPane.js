@@ -1,12 +1,9 @@
 import { Button, Checkbox, FormControlLabel, RadioGroup, Radio } from "@mui/material";
 import { useEffect, useState } from "react"
+import FilterCheckBox from "./FilterCheckBox";
 
 function FilterPane(props) {
     const [ranges, setRanges] = useState([])
-    const [companyChecked, setCompanyChecked] = useState([])
-    const [sideEffectChecked, setSideEffectChecked] = useState([])
-    const [priceRangeChecked, setPriceRangeChecked] = useState([])
-    const [ageGroupChecked, setAgeGroupChecked] = useState([])
     
     useEffect(() => {
         let lo = 0
@@ -27,36 +24,18 @@ function FilterPane(props) {
 
     }, [props.filterValues]);
 
-    function checkCompany(id) {
-        console.log("dfdswffd")
-        if (props.filters.companies.includes(id)) {
-            props.filters.companies = props.filters.companies.filter(c=>c !== id)
-        }
-        else {
-            console.log("Adding " + id)
-            props.filters.companies.push(id)
-        }
+    function removeFilters() {
+        props.setFilters({
+            searchText: "",
+            companies: [],
+            sideEffects: [],
+            priceRanges: [],
+            ageGroups: [],
+            prescribed: 2
+        })
     }
-    function checkSideEffect(id) {
-        // if (filters.sideEffects.includes(id)) {
-        //     filters.sideEffects = filters.sideEffects.filter(s=>s !== id)
-        // }
-        // else {
-        //     filters.sideEffects.push(id)
-        // }
-    }
-    function checkPriceRange(name) {
-        // if (filters.priceRanges.includes(name)) {
-        //     filters.priceRanges = filters.priceRanges.filter(s=>s !== name)
-        // }
-        // else {
-        //     filters.priceRanges.push(name)
-        // }
-    }
-
-    function applyFilters() {
-        // TODO api call
-        //console.log(filters)
+    function selectPrescriptionType(e) {
+        props.setFilters({...props.filters, prescribed: e.target.value})
     }
     
     return (
@@ -65,31 +44,32 @@ function FilterPane(props) {
         <h5 className="filter-name-title">Companies</h5>
         {
             props.filterValues?.companies.map(c => {
-                return <FormControlLabel className="check-box" key={c.id} control={<Checkbox size="small" className="check-box" checked={props.filters.companies.includes(c.id)} onChange={checkCompany(c.id)}/>} label={c.name} />
+                return <FilterCheckBox key={c.id} list={props.filters.companies} name={c.name} keyValue={c.id} setFilters={props.setFilters} filters={props.filters} listName="companies" />
             })
         }
         <h5 className="filter-name-title">Side Effects</h5>
         {
             props.filterValues?.sideEffects.map(s => {
-                return <FormControlLabel key={s.id} control={<Checkbox size="small" onChange={checkSideEffect(s.id)}/>} label={s.name} />
+                return <FilterCheckBox key={s.id} list={props.filters.sideEffects} name={s.name} keyValue={s.id} setFilters={props.setFilters} filters={props.filters} listName="sideEffects" />
             })
         }
         <h5 className="filter-name-title">Price</h5>
         {
             ranges.map(r => {
-                return <FormControlLabel key={r.id} control={<Checkbox size="small" onClick={checkPriceRange(r.name)}/>} label={r.name + "$"} />
+                return <FilterCheckBox key={r.id} list={props.filters.priceRanges} name={r.name + "$"} keyValue={r.name} setFilters={props.setFilters} filters={props.filters} listName="priceRanges" />
             })
         }
         <h5 className="filter-name-title">Prescription</h5>
         <RadioGroup
             name="radio-buttons-group"
             defaultValue={2}
+            onChange={selectPrescriptionType}
             >
             <FormControlLabel value={2} control={<Radio size="small" />} label="All" />
             <FormControlLabel value={1} control={<Radio size="small" />} label="Needs Prescription" />
             <FormControlLabel value={0} control={<Radio size="small" />} label="No Prescription" />
         </RadioGroup>
-        <Button size="small" className="apply-filter-button" variant="contained" onClick={applyFilters}>Apply Filters</Button>
+        <Button size="small" className="apply-filter-button" variant="contained" onClick={removeFilters}>Apply Filters</Button>
         </>
         
     )

@@ -5,6 +5,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const drawerWidth = 240;
 
@@ -50,6 +51,7 @@ export default function AppNavbar(props) {
                 >
                 <MenuIcon />
                 </IconButton>
+                
                 <Typography
                 component="h1"
                 variant="h6"
@@ -59,6 +61,9 @@ export default function AppNavbar(props) {
                 >
                     PharmHub
                 </Typography>
+                <IconButton href='cart' color="inherit">
+                    <ShoppingCartIcon />
+                </IconButton>
             </Toolbar>
         </AppBar>
     );

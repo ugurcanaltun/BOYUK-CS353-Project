@@ -3,11 +3,12 @@ import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
+import { cartAdd } from "../api/CartAPI";
 
 function DrugCard(props) {
-    const [addedToCart, setAddedToCart] = useState(false)
     const [count, setCount] = useState(0)
     function addToCart() {
+        cartAdd(props.id)
         setCount(count + 1)
     }
 
@@ -22,7 +23,7 @@ function DrugCard(props) {
             <h3 className="drug-price">{props.drugPrice}$</h3>
             {
                 (count===0)?
-                <Button className="buy-button" variant="contained" onClick={addToCart}>Add To Cart</Button>
+                <Button size="small" className="buy-button" variant="contained" onClick={addToCart}>Add To Cart</Button>
                 :
                 <div className="cart-section">
                     <IconButton onClick={removeFromCart}>

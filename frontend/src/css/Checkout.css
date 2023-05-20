@@ -1,0 +1,16 @@
+.checkout-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+.checkout-information-container {
+    grid-column-start: 1;
+    grid-column-end: 7;
+}
+
+.checkout-summary-container {
+    padding: 20px;
+    grid-column-start: 7;
+    grid-column-end: -1;
+}
