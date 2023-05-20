@@ -1,8 +1,11 @@
 import { Checkbox, FormControlLabel } from "@mui/material"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 function FilterCheckBox(props) {
     const [checked, setChecked] = useState(false)
+    useEffect(() => {
+        setChecked(false)
+    }, [props.reset])
 
     function handleChange() {
         if (checked) {
@@ -27,7 +30,7 @@ function FilterCheckBox(props) {
         setChecked(!checked)
     }
     return(
-        <FormControlLabel control={<Checkbox size="small" onChange={handleChange}/>} label={props.name} />
+        <FormControlLabel control={<Checkbox checked={checked} size="small" onChange={handleChange}/>} label={<p className="checkbox-text">{props.name}</p>} />
     )
 }
 

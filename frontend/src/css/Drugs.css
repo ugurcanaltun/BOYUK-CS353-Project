@@ -1,6 +1,6 @@
 .drugs-screen-container {
     display: grid;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(16, 1fr);
     grid-gap: 10px;
     
 }
@@ -10,20 +10,31 @@
     border-radius: 10px;
     background-color: antiquewhite;
     grid-column-start: 1;
-    grid-column-end: 2;
+    grid-column-end: 4;
 }
 
 .right-section {
-    grid-column-start: 2;
+    grid-column-start: 4;
     grid-column-end: -1;
 }
 
-.check-box {
-    font-size: 1px;
+.filter-list {
+    display: flex;
+    flex-direction: column;
+    max-height: 150px;
+    overflow-y: scroll;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #f1f1f1;
 }
 
 .search-bar {
     width: 100%;
+}
+
+.categories-container {
+    display: flex;
+    gap: 10px;
+    padding: 10px;
 }
 
 .filter-name-title {
@@ -44,6 +55,7 @@
 }
 
 .drug-list-container {
+    padding-left: 10px;
     display: flex;
     flex-wrap: wrap;
 }
@@ -65,7 +77,6 @@
     margin-right: 10px;
     padding: 10px;
     border-radius: 10px;
-    background-color: aqua;
     width: 8.5em;
 }
 
@@ -79,5 +90,10 @@
 }
 
 .count {
+    margin: 0;
+}
+
+.checkbox-text {
+    font-size: 14px;
     margin: 0;
 }

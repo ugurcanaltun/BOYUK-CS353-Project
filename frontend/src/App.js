@@ -13,6 +13,7 @@ import WarehouseOrdersScreen from './screens/WarehouseOrdersScreen';
 import HomeOutletScreen from './screens/HomeOutletScreen';
 import DrugsScreen from './screens/DrugsScreen';
 import CartScreen from './screens/CartScreen';
+import CheckoutScreen from './screens/CheckoutScreen';
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                     <Route path="pharmacies" element={<PharmaciesScreen />} />
                     <Route path="warehouseorders" element={<WarehouseOrdersScreen />} />
                     <Route path="cart" element={<CartScreen />} />
+                    <Route path="checkout" element={<CheckoutScreen />} />
                 </Route>
             </Routes>
         </Router>

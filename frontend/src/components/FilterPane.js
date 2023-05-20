@@ -4,6 +4,7 @@ import FilterCheckBox from "./FilterCheckBox";
 
 function FilterPane(props) {
     const [ranges, setRanges] = useState([])
+    const [reset, setReset] = useState(false)
     
     useEffect(() => {
         let lo = 0
@@ -25,14 +26,18 @@ function FilterPane(props) {
     }, [props.filterValues]);
 
     function removeFilters() {
+        setReset(true)
         props.setFilters({
-            searchText: "",
+            ...props.filters,
             companies: [],
             sideEffects: [],
             priceRanges: [],
             ageGroups: [],
             prescribed: 2
         })
+        setTimeout(function(){
+            setReset(false)
+        }, 1000);
     }
     function selectPrescriptionType(e) {
         props.setFilters({...props.filters, prescribed: e.target.value})
@@ -42,34 +47,42 @@ function FilterPane(props) {
         <>
         <h4 className="filters-title">Filters</h4>
         <h5 className="filter-name-title">Companies</h5>
+        <div className="filter-list">
         {
             props.filterValues?.companies.map(c => {
-                return <FilterCheckBox key={c.id} list={props.filters.companies} name={c.name} keyValue={c.id} setFilters={props.setFilters} filters={props.filters} listName="companies" />
+                return <FilterCheckBox reset={reset} key={c.id} list={props.filters.companies} name={c.name} keyValue={c.id} setFilters={props.setFilters} filters={props.filters} listName="companies" />
             })
         }
+        </div>
         <h5 className="filter-name-title">Side Effects</h5>
+        <div className="filter-list">
         {
             props.filterValues?.sideEffects.map(s => {
-                return <FilterCheckBox key={s.id} list={props.filters.sideEffects} name={s.name} keyValue={s.id} setFilters={props.setFilters} filters={props.filters} listName="sideEffects" />
+                return <FilterCheckBox reset={reset} key={s.id} list={props.filters.sideEffects} name={s.name} keyValue={s.id} setFilters={props.setFilters} filters={props.filters} listName="sideEffects" />
             })
         }
+        </div>
+        
         <h5 className="filter-name-title">Price</h5>
+        <div className="filter-list">
         {
             ranges.map(r => {
-                return <FilterCheckBox key={r.id} list={props.filters.priceRanges} name={r.name + "$"} keyValue={r.name} setFilters={props.setFilters} filters={props.filters} listName="priceRanges" />
+                return <FilterCheckBox reset={reset} key={r.id} list={props.filters.priceRanges} name={r.name + "$"} keyValue={r.name} setFilters={props.setFilters} filters={props.filters} listName="priceRanges" />
             })
         }
+        </div>
         <h5 className="filter-name-title">Prescription</h5>
         <RadioGroup
             name="radio-buttons-group"
             defaultValue={2}
+            value={props.filters.prescribed}
             onChange={selectPrescriptionType}
             >
-            <FormControlLabel value={2} control={<Radio size="small" />} label="All" />
-            <FormControlLabel value={1} control={<Radio size="small" />} label="Needs Prescription" />
-            <FormControlLabel value={0} control={<Radio size="small" />} label="No Prescription" />
+            <FormControlLabel value={2} control={<Radio size="small" />} label={<p className="checkbox-text">All</p>} />
+            <FormControlLabel value={1} control={<Radio size="small" />} label={<p className="checkbox-text">Needs Prescription</p>} />
+            <FormControlLabel value={0} control={<Radio size="small" />} label={<p className="checkbox-text">No Prescription</p>} />
         </RadioGroup>
-        <Button size="small" className="apply-filter-button" variant="contained" onClick={removeFilters}>Apply Filters</Button>
+        <Button size="small" className="apply-filter-button" variant="contained" onClick={removeFilters}>Remove Filters</Button>
         </>
         
     )

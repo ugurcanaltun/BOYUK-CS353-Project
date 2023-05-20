@@ -1,9 +1,9 @@
-import { Button, IconButton } from "@mui/material";
+import { Button, Card, IconButton } from "@mui/material";
 import { useState } from "react";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
-import { cartAdd } from "../api/CartAPI";
+import { cartAdd, cartRemove } from "../api/CartAPI";
 
 function DrugCard(props) {
     const [count, setCount] = useState(0)
@@ -13,11 +13,12 @@ function DrugCard(props) {
     }
 
     function removeFromCart() {
+        cartRemove(props.id)
         setCount(count - 1)
     }
     
     return (
-        <div className="drug-card">
+        <Card elevation={3} className="drug-card">
             <MedicationLiquidIcon />
             <h5 className="drug-name">{props.drugName}</h5>
             <h3 className="drug-price">{props.drugPrice}$</h3>
@@ -35,7 +36,7 @@ function DrugCard(props) {
                     </IconButton>
                 </div>
             }
-        </div>
+        </Card>
     )
 }
 

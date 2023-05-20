@@ -7,7 +7,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-export default function Deposits() {
+export default function Deposits(props) {
   return (
     <React.Fragment>
       <Title>Recent Deposits</Title>
