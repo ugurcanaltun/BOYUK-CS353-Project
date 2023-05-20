@@ -1,8 +1,10 @@
-import { TextField } from "@mui/material";
+import { Box, Icon, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import DrugCard from "../components/DrugCard";
 import FilterPane from "../components/FilterPane";
 import { fetchFilterValues } from "../api/DrugAPI";
+import SearchIcon from '@mui/icons-material/Search';
+import '../css/Drugs.css'
 
 function DrugsScreen() {
     const [searchText, setSearchText] = useState("");
@@ -33,8 +35,26 @@ function DrugsScreen() {
                 }
             </div>
             <div className="right-section">
-                <TextField value={searchText} label="drugs"/>
-                <DrugCard drugName="aaa" drugPrice="123"/>
+                <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
+                    <SearchIcon  sx={{ color: 'action.active', mr: 1, my: 0.5 }}/>
+                    <TextField variant="standard" id="input-with-sx" className="search-bar" value={searchText} label="Search Drugs" />
+                </Box>
+                <div className="drug-list-container">
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    <DrugCard drugName="aaa" drugPrice="123"/>
+                </div>
             </div>
         </div>
     )

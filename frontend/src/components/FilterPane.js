@@ -61,30 +61,35 @@ function FilterPane(props) {
     
     return (
         <>
+        <h4 className="filters-title">Filters</h4>
+        <h5 className="filter-name-title">Companies</h5>
         {
             props.filterValues?.companies.map(c => {
-                return <FormControlLabel key={c.id} control={<Checkbox checked={props.filters.companies.includes(c.id)} onChange={checkCompany(c.id)}/>} label={c.name} />
+                return <FormControlLabel className="check-box" key={c.id} control={<Checkbox size="small" className="check-box" checked={props.filters.companies.includes(c.id)} onChange={checkCompany(c.id)}/>} label={c.name} />
             })
         }
+        <h5 className="filter-name-title">Side Effects</h5>
         {
             props.filterValues?.sideEffects.map(s => {
-                return <FormControlLabel key={s.id} control={<Checkbox onChange={checkSideEffect(s.id)}/>} label={s.name} />
+                return <FormControlLabel key={s.id} control={<Checkbox size="small" onChange={checkSideEffect(s.id)}/>} label={s.name} />
             })
         }
+        <h5 className="filter-name-title">Price</h5>
         {
             ranges.map(r => {
-                return <FormControlLabel key={r.id} control={<Checkbox onClick={checkPriceRange(r.name)}/>} label={r.name} />
+                return <FormControlLabel key={r.id} control={<Checkbox size="small" onClick={checkPriceRange(r.name)}/>} label={r.name + "$"} />
             })
         }
+        <h5 className="filter-name-title">Prescription</h5>
         <RadioGroup
             name="radio-buttons-group"
             defaultValue={2}
             >
-            <FormControlLabel value={2} control={<Radio />} label="All" />
-            <FormControlLabel value={1} control={<Radio />} label="Needs Prescription" />
-            <FormControlLabel value={0} control={<Radio />} label="No Prescription" />
+            <FormControlLabel value={2} control={<Radio size="small" />} label="All" />
+            <FormControlLabel value={1} control={<Radio size="small" />} label="Needs Prescription" />
+            <FormControlLabel value={0} control={<Radio size="small" />} label="No Prescription" />
         </RadioGroup>
-        <Button onClick={applyFilters}>Apply Filters</Button>
+        <Button size="small" className="apply-filter-button" variant="contained" onClick={applyFilters}>Apply Filters</Button>
         </>
         
     )

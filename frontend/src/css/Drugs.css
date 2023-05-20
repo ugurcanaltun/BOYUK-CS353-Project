@@ -1,0 +1,80 @@
+.drugs-screen-container {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-gap: 10px;
+    
+}
+
+.filter-container {
+    padding: 20px;
+    border-radius: 10px;
+    background-color: antiquewhite;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.right-section {
+    grid-column-start: 2;
+    grid-column-end: -1;
+}
+
+.check-box {
+    font-size: 1px;
+}
+
+.search-bar {
+    width: 100%;
+}
+
+.filter-name-title {
+    margin-bottom: 0px;
+    margin-top: 10px;
+}
+
+.filters-title {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.apply-filter-button {
+    height: 40px;
+    width: 100%;
+    margin-top: 15px !important;
+    font-size: 1px;
+}
+
+.drug-list-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.drug-name {
+    margin: 0;
+}
+.drug-price {
+    margin: 0;
+}
+.buy-button {
+    margin-top: 10px !important;
+}
+
+.drug-card {
+    margin-top: 20px;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: aqua;
+    width: 7em;
+}
+
+.cart-section {
+    border: 1px solid black;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    height: 30px;
+}
+
+.count {
+    margin: 0;
+}
