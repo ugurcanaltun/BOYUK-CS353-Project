@@ -8,7 +8,7 @@ import { cartAdd, cartRemove } from "../api/CartAPI";
 function DrugCard(props) {
     const [count, setCount] = useState(0)
     function addToCart() {
-        cartAdd(props.id)
+        cartAdd(props.drugName)
         setCount(count + 1)
     }
 
