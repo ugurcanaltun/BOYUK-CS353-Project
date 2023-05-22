@@ -3,24 +3,31 @@ import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
 import { Button } from '@mui/material';
+import { fetchBankAccounts } from '../api/BankAPI';
 
-function preventDefault(event) {
-  event.preventDefault();
-}
 
 export default function Deposits(props) {
+  const [bankAccount, setBankAccount] = React.useState([])
+  React.useEffect(()=>{
+    fetchBankAccounts().then(a=>{
+      setBankAccount(a.find(b=>b.active==='active'))
+    })
+  }, [])
   return (
     <React.Fragment>
-      <Title>Recent Purchases</Title>
+      <Title>Current Balance</Title>
       <Typography component="p" variant="h4">
-        $3,024.00
+        ${bankAccount.balance}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 15 March, 2019
+        in the active bank account
+      </Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        ************ {bankAccount.bank_account_no}
       </Typography>
       <div>
         <Button color="primary" href="bankaccounts">
-          View balance
+          View All Accounts
         </Button>
       </div>
     </React.Fragment>

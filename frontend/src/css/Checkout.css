@@ -6,11 +6,16 @@
 
 .checkout-information-container {
     grid-column-start: 1;
-    grid-column-end: 7;
+    grid-column-end: 6;
 }
 
 .checkout-summary-container {
     padding: 20px;
-    grid-column-start: 7;
+    grid-column-start: 6;
     grid-column-end: -1;
+}
+
+.account-container {
+    padding-left: 20px;
+    padding-right: 20px;
 }

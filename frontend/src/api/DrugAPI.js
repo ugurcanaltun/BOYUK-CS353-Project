@@ -11,15 +11,10 @@ export async function fetchDrugs(filter) {
 }
 
 export async function fetchFilterValues() {
-    await sleep(1000)
     return {
         companies: ['aaa','bbb','ccc','ddd','eee','fff'],
         sideEffects: ['None', 'headache', 'sex', 'iktidarsızlık'],
         categories: ['painkiller', 'pastile', 'laxative'],
         priceRange: 500,
     }
-}
-
-const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
