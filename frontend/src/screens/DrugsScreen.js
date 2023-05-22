@@ -5,6 +5,7 @@ import FilterPane from "../components/FilterPane";
 import { fetchFilterValues, fetchDrugs } from "../api/DrugAPI";
 import SearchIcon from '@mui/icons-material/Search';
 import '../css/Drugs.css'
+import { fetchCart } from "../api/CartAPI";
 
 function DrugsScreen() {
     const [searchText, setSearchText] = useState("");
@@ -12,18 +13,32 @@ function DrugsScreen() {
         searchText: "",
         companies: [],
         sideEffects: [],
-        priceRanges: [],
-        ageGroups: [],
-        category: -1,
+        priceRange: {
+            min: 0,
+            max: 100
+        },
+        category: "all",
         prescribed: 2
     });
     const [filterValues, setFilterValues] = useState();
     const [drugs, setDrugs] = useState();
     const [selected, setSelected] = useState(-1);
 
+    const [cart, setCart] = useState([])
+
     useEffect(() => {
         fetchFilterValues().then(f => {
             setFilterValues(f)
+            setFilters({...filters, priceRange: {
+                min: 0,
+                max: f.priceRange
+            }})
+        })
+    }, [])
+
+    useEffect(() => {
+        fetchCart().then(c=> {
+            setCart(c)
         })
     }, [])
     
@@ -52,7 +67,7 @@ function DrugsScreen() {
                 {   
                     filterValues?
                     <FilterPane filterValues={filterValues} filters={filters} setFilters={setFilters} />:
-                    <></>
+                    null
                 }
             </div>
             <div className="right-section">
@@ -65,33 +80,28 @@ function DrugsScreen() {
                         filterValues?
                         <Chip color="primary" label="All" variant={(selected===-1)?"filled":"outlined"} onClick={e=>{handleSelectCategory(-1)}} />
                         :
-                        <></>
+                        null
                     }
                     
                     {
                         filterValues?
                         filterValues.categories.map(c=> {
-                            return <Chip color="primary" key={c.id} label={c.name} variant={(selected===c.id)?"filled":"outlined"} onClick={e=>{handleSelectCategory(c.id)}} />
+                            return <Chip color="primary" key={c} label={c} variant={(selected===c)?"filled":"outlined"} onClick={e=>{handleSelectCategory(c)}} />
                         })
                         :
-                        <></>  
+                        null
                     }
                 </div>
                 <div className="drug-list-container">
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
-                    <DrugCard drugName="aaa" drugPrice="123"/>
+                    {
+                        drugs?
+                        drugs.map(d=>{
+                            return (cart.some(c=>c.drug_name === d.name))?
+                            <DrugCard key={d.name} count={cart.find((c)=>c.drug_name===d.name)["drug_count"]} drugName={d.name} drugPrice={d.price}/>:
+                            <DrugCard key={d.name} count={0} drugName={d.name} drugPrice={d.price}/>
+                        }): null
+                    }
+                    
                 </div>
             </div>
         </div>

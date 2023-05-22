@@ -1,38 +1,22 @@
-import { Button, Checkbox, FormControlLabel, RadioGroup, Radio } from "@mui/material";
+import { Button, Checkbox, FormControlLabel, RadioGroup, Radio, Slider } from "@mui/material";
 import { useEffect, useState } from "react"
 import FilterCheckBox from "./FilterCheckBox";
 
 function FilterPane(props) {
-    const [ranges, setRanges] = useState([])
     const [reset, setReset] = useState(false)
+    const [priceRange, setPriceRange] = useState([0,props.filterValues.priceRange])
     
-    useEffect(() => {
-        let lo = 0
-        let hi = 10
-        let temp = []
-        for (let i = 0; i < props.filterValues.priceRange / 10; i++) {
-            let newRange = {
-                id: i,
-                name: lo.toString() + "-" + hi.toString(),
-                low: lo,
-                high: hi
-            }
-            temp.push(newRange)
-            lo = lo + 10
-            hi = hi + 10
-        }
-        setRanges(temp)
-
-    }, [props.filterValues]);
-
     function removeFilters() {
         setReset(true)
+        setPriceRange([0,props.filterValues.priceRange])
         props.setFilters({
             ...props.filters,
             companies: [],
             sideEffects: [],
-            priceRanges: [],
-            ageGroups: [],
+            priceRanges: {
+                min: 0,
+                max: props.filterValues.priceRange
+            },
             prescribed: 2
         })
         setTimeout(function(){
@@ -42,6 +26,16 @@ function FilterPane(props) {
     function selectPrescriptionType(e) {
         props.setFilters({...props.filters, prescribed: e.target.value})
     }
+
+    function handleRangeChange(event, newValue) {
+        setPriceRange(newValue);
+    }
+    function saveRangeChange(event, newValue) {
+        props.setFilters({...props.filters, priceRange:{
+            min: newValue[0],
+            max: newValue[1]
+        }})
+    }
     
     return (
         <>
@@ -50,7 +44,7 @@ function FilterPane(props) {
         <div className="filter-list">
         {
             props.filterValues?.companies.map(c => {
-                return <FilterCheckBox reset={reset} key={c.id} list={props.filters.companies} name={c.name} keyValue={c.id} setFilters={props.setFilters} filters={props.filters} listName="companies" />
+                return <FilterCheckBox reset={reset} key={c} list={props.filters.companies} name={c} keyValue={c} setFilters={props.setFilters} filters={props.filters} listName="companies" />
             })
         }
         </div>
@@ -58,18 +52,21 @@ function FilterPane(props) {
         <div className="filter-list">
         {
             props.filterValues?.sideEffects.map(s => {
-                return <FilterCheckBox reset={reset} key={s.id} list={props.filters.sideEffects} name={s.name} keyValue={s.id} setFilters={props.setFilters} filters={props.filters} listName="sideEffects" />
+                return <FilterCheckBox reset={reset} key={s} list={props.filters.sideEffects} name={"No "+s} keyValue={s} setFilters={props.setFilters} filters={props.filters} listName="sideEffects" />
             })
         }
         </div>
         
         <h5 className="filter-name-title">Price</h5>
-        <div className="filter-list">
-        {
-            ranges.map(r => {
-                return <FilterCheckBox reset={reset} key={r.id} list={props.filters.priceRanges} name={r.name + "$"} keyValue={r.name} setFilters={props.setFilters} filters={props.filters} listName="priceRanges" />
-            })
-        }
+        <div className="">
+        <Slider
+            getAriaLabel={() => 'Temperature range'}
+            value={priceRange}
+            onChange={handleRangeChange}
+            onChangeCommitted={saveRangeChange}
+            valueLabelDisplay="auto"
+            max={props.filterValues.priceRange}
+        />
         </div>
         <h5 className="filter-name-title">Prescription</h5>
         <RadioGroup

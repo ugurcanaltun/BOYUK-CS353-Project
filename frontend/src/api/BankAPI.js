@@ -1,15 +1,52 @@
-export function fetchBankAccounts() {
+import { BASE_URL } from "./BaseURL";
+import axios from "axios";
 
+export async function fetchBankAccounts() {
+    let TCK = 2121212122 // localStorage.getItem("user_TCK")
+    try {
+      const response = await axios.post(BASE_URL + "/bank/listAccounts",{
+        "patient_TCK": TCK,
+      })
+      return response.data
+    } catch (error) {
+      console.error(error);
+    }
 }
 
-export function addBankAccount() {
-
+export async function addBankAccount(accNo, accPassword) {
+    let TCK = 2121212122 // localStorage.getItem("user_TCK")
+    try {
+      const response = await axios.post(BASE_URL + "/bank/addAccount",{
+        "patient_TCK": TCK,
+        "bank_account_no": accNo,
+        "bank_account_password": accPassword
+      })
+      return response.data
+    } catch (error) {
+      console.error(error);
+    }
 }
 
-export function removeBankAccount() {
-
+export async function removeBankAccount(accNo) {
+    try {
+      const response = await axios.post(BASE_URL + "/bank/removeAccount",{
+        "bank_account_no": accNo,
+      })
+      return response.data
+    } catch (error) {
+      console.error(error);
+    }
 }
 
-export function setBankAccountActive() {
-    
+export async function setBankAccountActive(accNo) {
+    let TCK = 2121212122
+    try {
+        const response = await axios.put(BASE_URL + "/bank/setActive",{
+          "bank_account_no": accNo,
+          "patient_TCK": TCK
+        })
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }
 }

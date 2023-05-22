@@ -6,14 +6,14 @@ import MedicationLiquidIcon from '@mui/icons-material/MedicationLiquid';
 import { cartAdd, cartRemove } from "../api/CartAPI";
 
 function DrugCard(props) {
-    const [count, setCount] = useState(0)
+    const [count, setCount] = useState(props.count)
     function addToCart() {
-        cartAdd(props.drugName)
+        cartAdd(props.drugName, 1)
         setCount(count + 1)
     }
 
     function removeFromCart() {
-        cartRemove(props.id)
+        cartRemove(props.drugName, 1)
         setCount(count - 1)
     }
     

@@ -14,6 +14,7 @@ import HomeOutletScreen from './screens/HomeOutletScreen';
 import DrugsScreen from './screens/DrugsScreen';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
+import BankAccountsScreen from './screens/BankAccountsScreen';
 
 function App() {
     return (
@@ -26,6 +27,7 @@ function App() {
                     <Route index element={<HomeOutletScreen />} />
                     <Route path="home" element={<HomeOutletScreen />} />
                     <Route path="listmedicines" element={<DrugsScreen />} />
+                    <Route path="bankaccounts" element={<BankAccountsScreen />} />
                     <Route path="addnewdrug" element={<AddNewDrugScreen />} />
                     <Route path="admin" element={<AdminScreen />} />
                     <Route path="myprescription" element={<MyPrescriptionScreen />} />
