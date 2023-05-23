@@ -17,13 +17,13 @@ export default function Deposits(props) {
     <React.Fragment>
       <Title>Current Balance</Title>
       <Typography component="p" variant="h4">
-        ${bankAccount.balance}
+        ${bankAccount?bankAccount.balance:""}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
         in the active bank account
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        ************ {bankAccount.bank_account_no}
+        ************ {bankAccount?bankAccount.bank_account_no: ""}
       </Typography>
       <div>
         <Button color="primary" href="bankaccounts">

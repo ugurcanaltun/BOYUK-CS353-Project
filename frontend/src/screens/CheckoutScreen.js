@@ -19,12 +19,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { setBankAccountActive } from "../api/BankAPI";
+import { fetchUserInfo } from "../api/UserAPI";
 
 export default function CheckoutScreen() {
     const [cartList, setCartList] = useState([]);
     const [numOfItems, setNumOfItems] = useState(0);
     const [bankAccounts, setBankAccounts] = useState([])
     const [changeAccountOpen, setChangeAccountOpen] = useState(false)
+    const [address, setAddress] = useState("")
     useEffect(() => {
         fetchCart().then(c => {
             setCartList(c)
@@ -37,6 +39,9 @@ export default function CheckoutScreen() {
         })
         fetchBankAccounts().then(b=>{
             setBankAccounts(b)
+        })
+        fetchUserInfo().then(u=> {
+            setAddress(u.address)
         })
     }, [])
     function ChangeAccountWindow() {
@@ -94,7 +99,7 @@ export default function CheckoutScreen() {
                 <h2>Payment ({numOfItems} Products) </h2>
                 <div>
                     <h4>Delivery Address</h4>
-                    <p>sdflkedfmgiselrfölöd.vldsfvdfsvcsdfcsdfsd</p>
+                    <p>{address}</p>
                 </div>
                 <div>
                     <h4>Payment Method</h4>
