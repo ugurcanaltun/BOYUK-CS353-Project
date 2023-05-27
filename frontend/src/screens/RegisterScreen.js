@@ -18,24 +18,36 @@ import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 const theme = createTheme();
 
 export default function SignUp() {
   const [role, setRole] = React.useState("");
   const [birthDate, setBirthDate] = React.useState("");
+  const [openDialog, setOpenDialog] = React.useState(false);
+  const [expertise, setExpertise] = React.useState("");
+  const [hospitalId, setHospitalId] = React.useState("");
+  const [bankAccountNo, setBankAccountNo] = React.useState("");
+  const [warehouseId, setWarehouseId] = React.useState("");
+  const [pharmacyId, setPharmacyId] = React.useState("");
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  }
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
+    setOpenDialog(true);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (
@@ -123,10 +135,10 @@ export default function SignUp() {
               </Grid>
               <Grid item xs={12} sm={5}>
                 <FormControl fullWidth sx={{mt: 1}}>
-                  <InputLabel id="demo-simple-select-label">Role</InputLabel>
+                  <InputLabel id="role-label">Role</InputLabel>
                   <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
+                    labelId="role-label"
+                    id="role-select"
                     value={role}
                     label="Role"
                     onChange={handleRoleChange}
@@ -155,6 +167,109 @@ export default function SignUp() {
               </Grid>
             </Grid>
           </Box>
+          <Dialog open={openDialog} onClose={handleCloseDialog}>
+            <DialogTitle>Fill Additional Information for Role</DialogTitle>
+            <DialogContent>
+              <DialogContentText sx={{mb: 2}}>
+                Please fill the additional information related with your role.
+              </DialogContentText>
+                {
+                  role === "doctor" 
+                  ?
+                  <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                      <TextField
+                        autoComplete="expertise-field"
+                        name="expertiseField"
+                        required
+                        fullWidth
+                        id="expertiseField"
+                        label="Your Expertise Field"
+                        autoFocus
+                        value={expertise}
+                        onChange={(event) => {
+                          setExpertise(event.target.value)
+                        }}
+                      />
+                    </Grid>
+                    <Grid item xs={12}>
+                      <TextField
+                        autoComplete="hospital-id"
+                        name="HospitalId"
+                        required
+                        fullWidth
+                        id="hospitalId"
+                        label="Your Hospital Id"
+                        autoFocus
+                        value={hospitalId}
+                        onChange={(event) => {
+                          setHospitalId(event.target.value)
+                        }}
+                      />
+                    </Grid>
+                  </Grid>
+                  :
+                  role === "patient"
+                  ?
+                  <>
+                  <TextField
+                    autoComplete="bank-account-No"
+                    name="bankAccountNo"
+                    required
+                    fullWidth
+                    id="bankAccountNo"
+                    label="Your Bank Account No"
+                    autoFocus
+                    value={bankAccountNo}
+                    onChange={(event) => {
+                      setBankAccountNo(event.target.value)
+                    }}
+                  />
+                  </>
+                  :
+                  role === "pharmaceuticalwarehouseworker"
+                  ?
+                  <>
+                  <TextField
+                    autoComplete="warehouse-id"
+                    name="warehouseId"
+                    required
+                    fullWidth
+                    id="warehouseId"
+                    label="Your Warehouse ID"
+                    autoFocus
+                    value={warehouseId}
+                    onChange={(event) => {
+                      setWarehouseId(event.target.value)
+                    }}
+                  />
+                  </>
+                  :
+                  role === "pharmacist"
+                  ?
+                  <>
+                  <TextField
+                    autoComplete="pharmacy-id"
+                    name="pharmacyId"
+                    required
+                    fullWidth
+                    id="pharmacyId"
+                    label="Your Pharmacy Id"
+                    autoFocus
+                    value={pharmacyId}
+                    onChange={(event) => {
+                      setPharmacyId(event.target.value)
+                    }}
+                  />
+                  </>
+                  :
+                  <div/>
+                }
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleCloseDialog}>Submit</Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </Container>
     </ThemeProvider>
