@@ -3,13 +3,15 @@ import axios from "axios";
 
 export async function fetchDrugs(filter) {
     try {
-      const response = await axios.post(BASE_URL + "/drug/filter", {
-        "min_price": filter.min_price,
-        "max_price": filter.max_price,
-        "company": filter.companies,
-        "drug_type:": filter.category,
-        "needs_prescription": filter.prescribed
-      })
+      const response = await axios.get(BASE_URL + "/drug/list")
+      
+      // await axios.post(BASE_URL + "/drug/filter", {
+      //   "min_price": filter.min_price,
+      //   "max_price": filter.max_price,
+      //   "company": filter.companies,
+      //   "drug_type:": filter.category,
+      //   "needs_prescription": filter.prescribed
+      // })
       return response.data
     } catch (error) {
       console.error(error);

@@ -21,6 +21,8 @@ import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { logout } from '../api/UserAPI';
 import { useNavigate  } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
+import "../css/Bank.css"
 
 
 const drawerWidth = 240;
@@ -217,7 +219,9 @@ export default function AppDrawer(props) {
               </ListItem>
             </Link>
           ))}
-          <Button onClick={handleLogout}>Logout</Button>
+          <Button className='logout-button' onClick={handleLogout}>
+            <LogoutIcon />
+          </Button>
         </List>
       </Drawer>
   );

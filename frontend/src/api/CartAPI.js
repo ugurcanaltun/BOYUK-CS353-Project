@@ -23,7 +23,7 @@ export async function cartRemove(drugName, pharmacyId) {
       "drug_name": drugName,
       "pharm_id": pharmacyId
     })
-    return response.data;
+    console.log(response.data);
   } catch (error) {
     console.error(error);
   }

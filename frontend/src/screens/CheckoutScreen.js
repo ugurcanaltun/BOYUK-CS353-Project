@@ -28,15 +28,19 @@ export default function CheckoutScreen() {
     const [bankAccounts, setBankAccounts] = useState([])
     const [changeAccountOpen, setChangeAccountOpen] = useState(false)
     const [address, setAddress] = useState("")
+    const [totalPrice, setTotalPrice] = useState(0)
     useEffect(() => {
         fetchCart().then(c => {
             setCartList(c)
             setNumOfItems(0)
             let sum = 0
+            let totPrice = 0
             c.map(item=>{
                 sum = sum + item.drug_count
+                totPrice = totPrice + item.price * item.drug_count
             })
             setNumOfItems(sum)
+            setTotalPrice(totPrice)
         })
         fetchBankAccounts().then(b=>{
             setBankAccounts(b)
@@ -48,7 +52,7 @@ export default function CheckoutScreen() {
 
     function complete() {
         completeOrder().then(result=>{
-            console.log(result.data)
+            console.log(result)
         })
     }
 
@@ -132,6 +136,7 @@ export default function CheckoutScreen() {
                         <TableRow>
                             <TableCell>Count</TableCell>
                             <TableCell>Drug Name</TableCell>
+                            <TableCell>Price</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -141,6 +146,7 @@ export default function CheckoutScreen() {
                                     return <TableRow key={c.drug_name}>
                                             <TableCell>{c.drug_count}</TableCell>
                                             <TableCell>{c.drug_name}</TableCell>
+                                            <TableCell>${c.price * c.drug_count}</TableCell>
                                         </TableRow>
                                 }):
                                 <></>
@@ -152,7 +158,7 @@ export default function CheckoutScreen() {
             <Card className="checkout-summary-container">
                 <h3>Order Summary</h3>
                 <p>Number of Drugs: {numOfItems}</p>
-                <p>Total Price: </p>
+                <p>Total Price: ${totalPrice}</p>
                 <Button onClick={complete} variant="contained">Buy Now</Button>
             </Card>
             <ChangeAccountWindow />

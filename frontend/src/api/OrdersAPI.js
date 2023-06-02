@@ -10,8 +10,7 @@ export async function completeOrder() {
     let TCK = localStorage.getItem("userTCK")
     try {
         const response = await axios.post(BASE_URL + "/drug/orderDrug",{
-          "patient_TCK": TCK,
-          "pharm_id": 1
+          "patient_TCK": TCK
         })
         console.log(response.data);
       } catch (error) {

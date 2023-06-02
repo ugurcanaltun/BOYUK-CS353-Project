@@ -15,33 +15,40 @@ import { cartAdd, cartRemove } from "../api/CartAPI";
 
 export default function CartScreen() {
     const [cartList, setCartList] = useState([]);
+    const [totalPrice, setTotalPrice] = useState(0)
     useEffect(() => {
         fetchCart().then(c => {
-            console.log(c)
+            let sum = 0
+            c.map(item => {
+                sum = sum + item.price * item.drug_count
+            })
             setCartList(c)
+            setTotalPrice(sum)
         })
     }, [])
     function CartItem(props) {
         const [count, setCount] = useState(props.drugCount);
+
         function addToCart() {
-            cartAdd(props.drugName, 1)
-            setCount(count + 1)
+            cartAdd(props.drugName, 1).then(() => {
+                setCount(count + 1)
+            })
         }
         
         function removeFromCart() {
-            cartRemove(props.drugName, 1)
-            if (count === 1) {
-                fetchCart().then(c => {
-                    console.log(c)
-                    setCartList(c)
-                })
-            }
-            setCount(count - 1)
+            cartRemove(props.drugName, 1).then(() => {
+                if (count === 1) {
+                    fetchCart().then(c => {
+                        console.log(c)
+                        setCartList(c)
+                    })
+                }
+                setCount(count - 1)
+            })
+            
         }
         return (
-            <TableRow
-            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
+            <TableRow>
                 <TableCell>
                     <div className="cart-section">
                         <IconButton onClick={removeFromCart}>
@@ -55,7 +62,9 @@ export default function CartScreen() {
                 </TableCell>
                 
                 <TableCell component="th" scope="row">{props.drugName}</TableCell>
-                <TableCell align="right">{count}</TableCell>
+                <TableCell component="th" scope="row">{props.company}</TableCell>
+                <TableCell component="th" scope="row">{props.prescribred}</TableCell>
+                <TableCell component="th" scope="row">${props.price * count}</TableCell>
             </TableRow>
         )
     }
@@ -77,19 +86,27 @@ export default function CartScreen() {
                         <TableRow>
                             <TableCell></TableCell>
                             <TableCell>Drug Name</TableCell>
-                            <TableCell align="right">Pharmacy Name</TableCell>
-                            <TableCell align="right">City</TableCell>
-                            <TableCell align="right">Number of items</TableCell>
+                            <TableCell>Company</TableCell>
+                            <TableCell>Needs Prescription</TableCell>
+                            <TableCell>Price</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
                             {
                                 cartList?
                                 cartList.map(d=> {
-                                    return <CartItem key={d.drug_name} drugCount={d.drug_count} drugName={d.drug_name}/>
+                                    return <CartItem prescribred={d.needs_prescription} company={d.company} key={d.drug_name} drugCount={d.drug_count} drugName={d.drug_name} price={d.price}/>
                                 })
                                 : <p>Noo</p>
                             }
+                            <TableRow>
+                            <TableCell></TableCell>
+                            
+                            <TableCell component="th" scope="row"></TableCell>
+                            <TableCell component="th" scope="row"></TableCell>
+                            <TableCell component="th" scope="row"></TableCell>
+                            <TableCell component="th" scope="row">Total: ${totalPrice}</TableCell>
+                        </TableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>
