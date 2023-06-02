@@ -20,6 +20,7 @@ import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { setBankAccountActive } from "../api/BankAPI";
 import { fetchUserInfo } from "../api/UserAPI";
+import { completeOrder } from "../api/OrdersAPI";
 
 export default function CheckoutScreen() {
     const [cartList, setCartList] = useState([]);
@@ -44,6 +45,13 @@ export default function CheckoutScreen() {
             setAddress(u.address)
         })
     }, [])
+
+    function complete() {
+        completeOrder().then(result=>{
+            console.log(result.data)
+        })
+    }
+
     function ChangeAccountWindow() {
         function handleClose() {
             setChangeAccountOpen(false)
@@ -145,7 +153,7 @@ export default function CheckoutScreen() {
                 <h3>Order Summary</h3>
                 <p>Number of Drugs: {numOfItems}</p>
                 <p>Total Price: </p>
-                <Button variant="contained">Buy Now</Button>
+                <Button onClick={complete} variant="contained">Buy Now</Button>
             </Card>
             <ChangeAccountWindow />
             

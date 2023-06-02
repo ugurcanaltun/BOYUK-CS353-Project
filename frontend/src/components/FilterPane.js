@@ -13,10 +13,8 @@ function FilterPane(props) {
             ...props.filters,
             companies: [],
             sideEffects: [],
-            priceRanges: {
-                min: 0,
-                max: props.filterValues.priceRange
-            },
+            min_price: 0,
+            max_price: props.filterValues.priceRange,
             prescribed: 2
         })
         setTimeout(function(){
@@ -31,10 +29,10 @@ function FilterPane(props) {
         setPriceRange(newValue);
     }
     function saveRangeChange(event, newValue) {
-        props.setFilters({...props.filters, priceRange:{
-            min: newValue[0],
-            max: newValue[1]
-        }})
+        props.setFilters({...props.filters,
+            min_price: newValue[0],
+            max_price: newValue[1]
+        })
     }
     
     return (

@@ -13,10 +13,8 @@ function DrugsScreen() {
         searchText: "",
         companies: [],
         sideEffects: [],
-        priceRange: {
-            min: 0,
-            max: 100
-        },
+        min_price: 0,
+        max_price: 100,
         category: "all",
         prescribed: 2
     });
