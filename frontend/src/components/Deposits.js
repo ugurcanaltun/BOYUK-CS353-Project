@@ -26,7 +26,7 @@ export default function Deposits(props) {
         ************ {bankAccount?bankAccount.bank_account_no: ""}
       </Typography>
       <div>
-        <Button color="primary" href="bankaccounts">
+        <Button color="primary" href="/home/bankaccounts">
           View All Accounts
         </Button>
       </div>
