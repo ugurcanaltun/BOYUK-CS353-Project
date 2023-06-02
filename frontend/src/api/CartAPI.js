@@ -2,9 +2,9 @@ import axios from 'axios';
 import { BASE_URL } from './BaseURL';
 
 export const cartAdd = async (drugName, pharmacyId) => {
-    let TCK = 2121212122 // localStorage.getItem("user_TCK")
+    let TCK = localStorage.getItem("userTCK")
     try {
-      const response = await axios.post(BASE_URL + "/cart/addCart",{
+      const response = await axios.post(BASE_URL + "/cart/addToCart",{
         "patient_TCK": TCK,
         "drug_name": drugName,
         "pharm_id": pharmacyId
@@ -16,9 +16,9 @@ export const cartAdd = async (drugName, pharmacyId) => {
 }
 
 export async function cartRemove(drugName, pharmacyId) {
-  let TCK = 2121212122 // localStorage.getItem("user_TCK")
+  let TCK = localStorage.getItem("userTCK")
   try {
-    const response = await axios.post(BASE_URL + "/cart/decrementDrug",{
+    const response = await axios.post(BASE_URL + "/cart/removeFromCart",{
       "patient_TCK": TCK,
       "drug_name": drugName,
       "pharm_id": pharmacyId
@@ -30,7 +30,7 @@ export async function cartRemove(drugName, pharmacyId) {
 }
 
 export async function fetchCart() {
-  let TCK = 2121212122// localStorage.getItem("user_TCK")
+  let TCK = localStorage.getItem("userTCK")
   try {
     const response = await axios.post(BASE_URL + "/cart/show",{
       "patient_TCK": TCK,

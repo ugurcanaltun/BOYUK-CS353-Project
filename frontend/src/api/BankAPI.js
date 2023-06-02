@@ -2,7 +2,7 @@ import { BASE_URL } from "./BaseURL";
 import axios from "axios";
 
 export async function fetchBankAccounts() {
-    let TCK = 2121212122 // localStorage.getItem("user_TCK")
+    let TCK = localStorage.getItem("userTCK")
     try {
       const response = await axios.post(BASE_URL + "/bank/listAccounts",{
         "patient_TCK": TCK,
@@ -14,7 +14,7 @@ export async function fetchBankAccounts() {
 }
 
 export async function addBankAccount(accNo, accPassword) {
-    let TCK = 2121212122 // localStorage.getItem("user_TCK")
+    let TCK = localStorage.getItem("userTCK")
     try {
       const response = await axios.post(BASE_URL + "/bank/addAccount",{
         "patient_TCK": TCK,
@@ -39,7 +39,7 @@ export async function removeBankAccount(accNo) {
 }
 
 export async function setBankAccountActive(accNo) {
-    let TCK = 2121212122
+    let TCK = localStorage.getItem("userTCK")
     try {
         const response = await axios.put(BASE_URL + "/bank/setActive",{
           "bank_account_no": accNo,

@@ -5,13 +5,33 @@ export function register() {
 
 }
 
-export function login() {
-    localStorage.setItem('userTCK', 2121212122);
-    localStorage.setItem('role', "patient");
+export async function login(TCK, password) {
+    try {
+        const response = await axios.post(BASE_URL + "/user/login", {
+          "TCK": TCK,
+          "password": password
+        });
+    
+        if (response.data.TCK) {
+          localStorage.setItem('userTCK', response.data.TCK);
+          localStorage.setItem('role', response.data.role);
+          return true;
+        }
+    
+        return false;
+      } catch (error) {
+        console.error(error);
+        return false;
+      }
+}
+
+export function logout() {
+    localStorage.removeItem('userTCK')
+    localStorage.removeItem('role')
 }
 
 export async function fetchUserInfo() {
-    let TCK = 2121212122 // localStorage.getItem("user_TCK")
+    let TCK = localStorage.getItem("userTCK")
     try {
         const response = await axios.post(BASE_URL + "/user/info", {
             "TCK": TCK

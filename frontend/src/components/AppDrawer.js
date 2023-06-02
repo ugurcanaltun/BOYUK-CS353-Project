@@ -18,6 +18,9 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import HomeIcon from '@mui/icons-material/Home';
 import { Link } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { logout } from '../api/UserAPI';
+import { useNavigate  } from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -49,7 +52,19 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function AppDrawer(props) {
-  const userType = "patient"
+  const userType = localStorage.getItem("role")
+  const navigate = useNavigate();
+
+  const handleLogout = (e) => {
+    logout()
+    navigate('/');
+  }
+  React.useEffect(()=> {
+    // console.log(localStorage.getItem('loggedin'))
+    // if (localStorage.getItem('loggedin') === "false") {
+    //   navigate('/');
+    // }
+  })
 
   let drawerItems;
 
@@ -202,6 +217,7 @@ export default function AppDrawer(props) {
               </ListItem>
             </Link>
           ))}
+          <Button onClick={handleLogout}>Logout</Button>
         </List>
       </Drawer>
   );

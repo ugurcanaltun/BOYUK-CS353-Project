@@ -10,17 +10,22 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { login } from '../api/UserAPI';
+import { useNavigate  } from 'react-router-dom';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const handleSubmit = (event) => {
+  const navigate = useNavigate();
+
+  async function handleSubmit(event){
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      tckNumber: data.get('tckNumber'),
-      password: data.get('password'),
-    });
+    login(data.get('tckNumber'), data.get('password')).then(loggedin=> {
+      if (loggedin) {
+        navigate('/home');
+      }
+    })
   };
 
   return (
