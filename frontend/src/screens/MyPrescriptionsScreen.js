@@ -22,10 +22,10 @@ export default function MyPrescriptionsScreen() {
         return (
             <TableRow>
                 <TableCell component="th" scope="row">{props.date}</TableCell>
-                <TableCell component="th" scope="row">{props.name}</TableCell>
-                <TableCell component="th" scope="row">{props.accNo}</TableCell>
-                <TableCell component="th" scope="row">{props.count}</TableCell>
-                <TableCell component="th" scope="row">${props.price}</TableCell>
+                <TableCell component="th" scope="row">{props.drugName}</TableCell>
+                <TableCell component="th" scope="row">{props.doctorName}</TableCell>
+                <TableCell component="th" scope="row">{props.illness}</TableCell>
+                <TableCell component="th" scope="row">${props.expertise}</TableCell>
             </TableRow>
         )
     }
@@ -41,6 +41,7 @@ export default function MyPrescriptionsScreen() {
                             <TableCell>Drug Name</TableCell>
                             <TableCell align="right">Doctor Name</TableCell>
                             <TableCell align="right">Illness</TableCell>
+                            <TableCell align="right">Expertise Field</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
@@ -48,11 +49,11 @@ export default function MyPrescriptionsScreen() {
                                 prescriptions?
                                 prescriptions.map(p=> {
                                     return <PrescriptionItem 
-                                        date={p.order_date}
-                                        name={p.drug_name} 
-                                        accNo={p.bank_account_no} 
-                                        count={p.count} 
-                                        price={p.total_price} 
+                                        date={p.date}
+                                        drugName={p.drug_name}
+                                        doctorName={p.fullname} 
+                                        illness={p.illness} 
+                                        expertise={p.expertise_field} 
                                         />
                                 }):<></>
                             }
@@ -61,7 +62,7 @@ export default function MyPrescriptionsScreen() {
                 </TableContainer>
                 :
                 <>
-                <h4>You have no previous orders</h4>
+                <h4>You have no prescriptions</h4>
                 <Button href="/home/listmedicines">Go to medicine list</Button>
                 </>
             }
