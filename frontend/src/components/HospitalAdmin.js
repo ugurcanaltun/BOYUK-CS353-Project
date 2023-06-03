@@ -3,10 +3,10 @@ import { addHospital, deleteHospital } from "../api/AdminAPI"
 import { useState } from "react"
 
 export function HospitalAdmin(props) {
-    const [hospIdToAdd, setHospIdToAdd] = useState()
-    const [hospIdToRemove, setHospIdToRemove] = useState()
-    const [hospName, setHospName] = useState()
-    const [hospCity, setHospCity] = useState()
+    const [hospIdToAdd, setHospIdToAdd] = useState("")
+    const [hospIdToRemove, setHospIdToRemove] = useState("")
+    const [hospName, setHospName] = useState("")
+    const [hospCity, setHospCity] = useState("")
 
     function addNewHospital() {
         addHospital(hospIdToAdd, hospName, hospCity).then(r=>{
@@ -15,6 +15,7 @@ export function HospitalAdmin(props) {
             }
         })
     }
+    
     function removeHospital() {
         deleteHospital(hospIdToRemove).then(r=>{
             if (r === "success") {
