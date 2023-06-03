@@ -25,7 +25,7 @@ export default function MyPrescriptionsScreen() {
                 <TableCell component="th" scope="row">{props.drugName}</TableCell>
                 <TableCell component="th" scope="row">{props.doctorName}</TableCell>
                 <TableCell component="th" scope="row">{props.illness}</TableCell>
-                <TableCell component="th" scope="row">${props.expertise}</TableCell>
+                <TableCell component="th" scope="row">{props.expertise}</TableCell>
             </TableRow>
         )
     }
@@ -39,9 +39,9 @@ export default function MyPrescriptionsScreen() {
                         <TableRow>
                             <TableCell>Prescription Date</TableCell>
                             <TableCell>Drug Name</TableCell>
-                            <TableCell align="right">Doctor Name</TableCell>
-                            <TableCell align="right">Illness</TableCell>
-                            <TableCell align="right">Expertise Field</TableCell>
+                            <TableCell>Doctor Name</TableCell>
+                            <TableCell>Illness</TableCell>
+                            <TableCell>Expertise Field</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
