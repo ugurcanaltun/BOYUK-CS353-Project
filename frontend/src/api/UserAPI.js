@@ -1,8 +1,16 @@
 import axios from "axios";
 import { BASE_URL } from "./BaseURL";
 
-export function register() {
+export async function register(props) {
+  try {
+    console.log(props)
+    const response = await axios.post(BASE_URL + "/user/add", props);
 
+    return response.data
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
 }
 
 export async function login(TCK, password) {

@@ -23,11 +23,18 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import { register } from '../api/UserAPI';
+import { Alert, Snackbar } from '@mui/material';
 
 const theme = createTheme();
 
 export default function SignUp() {
   const [role, setRole] = React.useState("");
+  const [TCK, setTCK] = React.useState("");
+  const [firstName, setFirstName] = React.useState("");
+  const [lastName, setLastName] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [address, setAddress] = React.useState("");
   const [birthDate, setBirthDate] = React.useState("");
   const [openDialog, setOpenDialog] = React.useState(false);
   const [expertise, setExpertise] = React.useState("");
@@ -35,6 +42,10 @@ export default function SignUp() {
   const [bankAccountNo, setBankAccountNo] = React.useState("");
   const [warehouseId, setWarehouseId] = React.useState("");
   const [pharmacyId, setPharmacyId] = React.useState("");
+
+  const [snackOpen, setSnackOpen] = React.useState(false)
+  const [snackText, setSnackText] = React.useState("")
+  const [snackStatus, setSnackStatus] = React.useState("error")
 
   const handleCloseDialog = () => {
     setOpenDialog(false);
@@ -47,8 +58,41 @@ export default function SignUp() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    register({
+      "TCK": TCK,
+      "password": password,
+      "fullname": firstName + " " + lastName,
+      "address": address,
+      "birth_year": birthDate.$y.toString(),
+      "role": role,
+      "expertise_field": expertise,
+      "hospital_id": hospitalId,
+      "warehouse_id": warehouseId,
+      "pharmacy_id": pharmacyId
+    }).then(data =>{
+      setTCK("")
+      setPassword("")
+      setFirstName("")
+      setLastName("")
+      setAddress("")
+      setBirthDate("")
+      setRole("")
+      setExpertise("")
+      setHospitalId("")
+      setBankAccountNo("")
+      setWarehouseId("")
+      setPharmacyId("")
+
+      if (data === "successful") {
+        setSnackStatus("success")
+        setSnackText("Account created successfuly")
+        setSnackOpen(true)
+      }
+    })
   };
+  function handleSnackClose() {
+    setSnackOpen(false)
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,6 +118,8 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  value={TCK}
+                  onChange={e=>{setTCK(e.target.value)}}
                   id="tckNumber"
                   label="TCK Number"
                   name="tckNumber"
@@ -84,6 +130,8 @@ export default function SignUp() {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
+                  value={firstName}
+                  onChange={e=>{setFirstName(e.target.value)}}
                   required
                   fullWidth
                   id="firstName"
@@ -95,6 +143,8 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  value={lastName}
+                  onChange={e=>{setLastName(e.target.value)}}
                   id="lastName"
                   label="Last Name"
                   name="lastName"
@@ -105,6 +155,8 @@ export default function SignUp() {
                 <TextField
                   required
                   fullWidth
+                  value={password}
+                  onChange={e=>{setPassword(e.target.value)}}
                   name="password"
                   label="Password"
                   type="password"
@@ -117,6 +169,8 @@ export default function SignUp() {
                   required
                   fullWidth
                   id="address"
+                  value={address}
+                  onChange={e=>{setAddress(e.target.value)}}
                   label="Your Address"
                   name="address"
                   autoComplete="address"
@@ -272,6 +326,11 @@ export default function SignUp() {
           </Dialog>
         </Box>
       </Container>
+      <Snackbar open={snackOpen} autoHideDuration={4000} onClose={handleSnackClose} anchorOrigin={{ vertical:"bottom",horizontal:"right" }}>
+          <Alert onClose={handleSnackClose} severity={snackStatus} sx={{ width: '100%' }}>
+              {snackText}
+          </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }

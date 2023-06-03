@@ -15,6 +15,7 @@ import DrugsScreen from './screens/DrugsScreen';
 import CartScreen from './screens/CartScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
 import BankAccountsScreen from './screens/BankAccountsScreen';
+import OrderCompletedScreen from './screens/OrderCompletedScreen';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                     <Route path="pharmacies" element={<PharmaciesScreen />} />
                     <Route path="warehouseorders" element={<WarehouseOrdersScreen />} />
                     <Route path="cart" element={<CartScreen />} />
+                    <Route path="ordercompleted" element={<OrderCompletedScreen />} />
                     <Route path="checkout" element={<CheckoutScreen />} />
                 </Route>
             </Routes>

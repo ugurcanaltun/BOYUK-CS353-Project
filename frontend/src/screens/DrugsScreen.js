@@ -20,7 +20,7 @@ function DrugsScreen() {
     });
     const [filterValues, setFilterValues] = useState();
     const [drugs, setDrugs] = useState();
-    const [selected, setSelected] = useState(-1);
+    const [selected, setSelected] = useState("all");
 
     const [cart, setCart] = useState([])
 
@@ -42,6 +42,9 @@ function DrugsScreen() {
     
     useEffect(() => {
         console.log(filters)
+        fetchCart().then(c=> {
+            setCart(c)
+        })
         fetchDrugs(filters).then(d=> {
             setDrugs(d)
         })
@@ -76,7 +79,7 @@ function DrugsScreen() {
                 <div className="categories-container">
                     {
                         filterValues?
-                        <Chip color="primary" label="All" variant={(selected===-1)?"filled":"outlined"} onClick={e=>{handleSelectCategory(-1)}} />
+                        <Chip color="primary" label="All" variant={(selected==="all")?"filled":"outlined"} onClick={e=>{handleSelectCategory("all")}} />
                         :
                         null
                     }

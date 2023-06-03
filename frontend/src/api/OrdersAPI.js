@@ -12,7 +12,7 @@ export async function completeOrder() {
         const response = await axios.post(BASE_URL + "/drug/orderDrug",{
           "patient_TCK": TCK
         })
-        console.log(response.data);
+        return response.data;
       } catch (error) {
         console.error(error);
       }

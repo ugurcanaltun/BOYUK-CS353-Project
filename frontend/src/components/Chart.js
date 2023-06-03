@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { useTheme } from '@mui/material/styles';
 import Title from './Title';
+import { Button } from '@mui/material';
 
 // Generate Sales Data
 function createData(time, amount) {
@@ -24,7 +25,11 @@ export default function Chart() {
 
   return (
     <div>
-        
+      <div>
+        <Button color="primary" href="/home/analysis">
+          View All Analysis
+        </Button>
+      </div>
     </div>
   );
 }

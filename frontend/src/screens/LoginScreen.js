@@ -10,23 +10,39 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useState } from "react";
 import { login } from '../api/UserAPI';
 import { useNavigate  } from 'react-router-dom';
+import { Alert, Snackbar } from '@mui/material';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
   const navigate = useNavigate();
+  const [snackOpen, setSnackOpen] = useState(false)
+  const [snackText, setSnackText] = useState("")
+  const [TCK, setTCK] = useState("")
+  const [password, setPassword] = useState("")
+  
 
   async function handleSubmit(event){
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    login(data.get('tckNumber'), data.get('password')).then(loggedin=> {
+    login(TCK, password).then(loggedin=> {
+      setTCK("")
+      setPassword("")
       if (loggedin) {
         navigate('/home');
       }
+      else {
+        setSnackText("Your TCK or password is not valid. Try again")
+        setSnackOpen(true)
+      }
     })
   };
+
+  function handleSnackClose() {
+    setSnackOpen(false)
+  }
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -55,6 +71,8 @@ export default function SignIn() {
               label="TCK Number"
               name="tckNumber"
               autoComplete="tckNumber"
+              value={TCK}
+              onChange={e=>{setTCK(e.target.value)}}
               autoFocus
             />
             <TextField
@@ -64,6 +82,8 @@ export default function SignIn() {
               name="password"
               label="Password"
               type="password"
+              value={password}
+              onChange={e=>{setPassword(e.target.value)}}
               id="password"
               autoComplete="current-password"
             />
@@ -86,6 +106,11 @@ export default function SignIn() {
           </Box>
         </Box>
       </Container>
+      <Snackbar open={snackOpen} autoHideDuration={4000} onClose={handleSnackClose} anchorOrigin={{ vertical:"bottom",horizontal:"right" }}>
+          <Alert onClose={handleSnackClose} severity="error" sx={{ width: '100%' }}>
+              {snackText}
+          </Alert>
+      </Snackbar>
     </ThemeProvider>
   );
 }
