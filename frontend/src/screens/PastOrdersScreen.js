@@ -46,7 +46,7 @@ export default function PastOrdersScreen() {
                                 (orders.length > 0)?
                                 orders.map(o=> {
                                     return <OrderItem 
-                                        date={o.date}
+                                        date={o.order_date}
                                         name={o.drug_name} 
                                         accNo={o.bank_account_no} 
                                         count={o.count} 
