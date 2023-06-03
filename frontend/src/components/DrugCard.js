@@ -10,13 +10,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { fetchPatients } from "../api/UserAPI";
+import { prescribeDrug } from "../api/PrescriptionAPI";
 
 function DrugCard(props) {
     const [count, setCount] = useState(props.count)
     const [dialogOpen, setDialogOpen] = useState(false)
     const [value, setValue] = useState({})
     const [patients, setPatients] = useState([{ label: 'Terminator 2: Judgment Day', year: 1991 }])
-    const [patientTCK, setPatientTCK] = useState("")
+    
 
     useEffect(()=>{
         fetchPatients().then(p=>{
@@ -35,11 +36,23 @@ function DrugCard(props) {
         setCount(count - 1)
     }
 
-    function prescribe() {
-
-    }
+    
 
     function PrescriptionDialog() {
+        const [patientTCK, setPatientTCK] = useState("")
+        const [illness, setIllness] = useState("")
+
+        function prescribe() {
+            prescribeDrug(patientTCK, props.drugName, illness).then(p=> {
+                if (p === "success") {
+                    setDialogOpen(false)
+                    console.log("success agaa")
+                }
+                else {
+                    console.log("fail")
+                }
+            })
+        }
         return (
             <Dialog open={dialogOpen} onClose={e=>setDialogOpen(false)}>
             <DialogTitle>Prescribe</DialogTitle>
@@ -52,16 +65,26 @@ function DrugCard(props) {
                 id="combo-box-demo"
                 getOptionLabel={(p) => p.fullname}
                 onInputChange={(event, newInputValue) => {
+                    console.log(newInputValue.TCK)
                     setPatientTCK(newInputValue.TCK);
                 }}
                 options={patients}
                 sx={{ width: 300 }}
                 renderInput={(params) => <TextField {...params} label="Patients" />}
                 />
+                <TextField
+                    autoFocus
+                    value={illness}
+                    onChange={e=>setIllness(e.target.value)}
+                    label="Illness"
+                    type="text"
+                    fullWidth
+                    variant="standard"
+              />
               
             </DialogContent>
             <DialogActions>
-              <Button onClick={e=>{}}>Add Account</Button>
+              <Button onClick={prescribe}>Prescribe</Button>
             </DialogActions>
           </Dialog>
         )

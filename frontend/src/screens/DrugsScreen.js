@@ -35,16 +35,16 @@ function DrugsScreen() {
     }, [])
 
     useEffect(() => {
-        fetchCart().then(c=> {
-            setCart(c)
-        })
+        
     }, [])
     
     useEffect(() => {
         console.log(filters)
-        fetchCart().then(c=> {
-            setCart(c)
-        })
+        if (localStorage.getItem("role") === "patient") {
+            fetchCart().then(c=> {
+                setCart(c)
+            })
+        }
         fetchDrugs(filters).then(d=> {
             setDrugs(d)
         })
