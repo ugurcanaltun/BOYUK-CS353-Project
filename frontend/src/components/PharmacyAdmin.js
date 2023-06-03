@@ -3,10 +3,10 @@ import { addPharmacy, deletePharmacy } from "../api/AdminAPI"
 import { useState } from "react"
 
 export function PharmacyAdmin(props){
-    const [pharmIdToAdd, setPharmIdToAdd] = useState()
-    const [pharmIdToRemove, setPharmIdToRemove] = useState()
-    const [pharmName, setPharmName] = useState()
-    const [pharmCity, setPharmCity] = useState()
+    const [pharmIdToAdd, setPharmIdToAdd] = useState("")
+    const [pharmIdToRemove, setPharmIdToRemove] = useState("")
+    const [pharmName, setPharmName] = useState("")
+    const [pharmCity, setPharmCity] = useState("")
 
     function addNewPharmacy(){
         addPharmacy(pharmIdToAdd, pharmName, pharmCity).then(r=>{
