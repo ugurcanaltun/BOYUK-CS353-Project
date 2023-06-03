@@ -7,6 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { Button } from "@mui/material";
 
 export default function PastOrdersScreen() {
     const [orders, setOrders] = useState([])
@@ -29,7 +30,9 @@ export default function PastOrdersScreen() {
     }
     return(
         <div className="orders-container">
-            <TableContainer component={Paper}>
+            {
+                (orders && orders.length > 0)?
+                <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
                         <TableRow>
@@ -43,7 +46,6 @@ export default function PastOrdersScreen() {
                         <TableBody>
                             {
                                 orders?
-                                (orders.length > 0)?
                                 orders.map(o=> {
                                     return <OrderItem 
                                         date={o.order_date}
@@ -52,11 +54,18 @@ export default function PastOrdersScreen() {
                                         count={o.count} 
                                         price={o.total_price} 
                                         />
-                                }):<p>no orders</p>:<></>
+                                }):<></>
                             }
                         </TableBody>
                     </Table>
                 </TableContainer>
+                :
+                <>
+                <h4>You have no previous orders</h4>
+                <Button href="/home/listmedicines">Go to medicine list</Button>
+                </>
+            }
+            
         </div>
     );
 }
