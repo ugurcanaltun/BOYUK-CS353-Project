@@ -15,8 +15,7 @@ import { prescribeDrug } from "../api/PrescriptionAPI";
 function DrugCard(props) {
     const [count, setCount] = useState(props.count)
     const [dialogOpen, setDialogOpen] = useState(false)
-    const [value, setValue] = useState({})
-    const [patients, setPatients] = useState([{ label: 'Terminator 2: Judgment Day', year: 1991 }])
+    const [patients, setPatients] = useState([])
     
 
     useEffect(()=>{
