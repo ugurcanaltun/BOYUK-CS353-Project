@@ -38,9 +38,9 @@ export default function PastOrdersScreen() {
                         <TableRow>
                             <TableCell>Order Date</TableCell>
                             <TableCell>Drug Name</TableCell>
-                            <TableCell align="right">Bank account</TableCell>
-                            <TableCell align="right">Number of items</TableCell>
-                            <TableCell align="right">Total Price</TableCell>
+                            <TableCell>Bank account</TableCell>
+                            <TableCell>Number of items</TableCell>
+                            <TableCell>Total Price</TableCell>
                         </TableRow>
                         </TableHead>
                         <TableBody>
