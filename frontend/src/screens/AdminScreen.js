@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { HospitalAdmin } from '../components/HospitalAdmin';
 import { WarehouseAdmin } from '../components/WarehouseAdmin';
+import { PharmacyAdmin } from '../components/PharmacyAdmin';
 
 export default function BasicSelect() {
   const [selected, setSelected] = React.useState(2);
@@ -40,6 +41,7 @@ export default function BasicSelect() {
     <div>
       {(selected === 2)? <HospitalAdmin/>:null}
       {(selected === 4)? <WarehouseAdmin/>:null}
+      {(selected === 3)? <PharmacyAdmin/>:null}
     </div>
     </div>
   );
