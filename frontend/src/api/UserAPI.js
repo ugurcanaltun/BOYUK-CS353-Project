@@ -49,3 +49,13 @@ export async function fetchUserInfo() {
         console.error(error);
     }
 }
+
+export async function fetchPatients() {
+  let TCK = localStorage.getItem("userTCK")
+    try {
+        const response = await axios.post(BASE_URL + "/user/listPatients")
+        return response.data
+    } catch (error) {
+        console.error(error);
+    }
+}
