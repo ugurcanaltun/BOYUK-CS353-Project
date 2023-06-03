@@ -3,7 +3,14 @@ import axios from "axios";
 
 export async function fetchOrders()  {
     let TCK = localStorage.getItem("userTCK");
-    return ["asda"]
+    try {
+      const response = await axios.post(BASE_URL + "/user/listOrders",{
+        "patient_TCK": TCK
+      })
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
 }
 
 export async function completeOrder() {
