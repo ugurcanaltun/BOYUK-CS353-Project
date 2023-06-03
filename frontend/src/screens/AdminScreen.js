@@ -4,7 +4,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { HospitalAdmin, WarehouseAdmin, PharmacyAdmin } from '../components/HospitalAdmin';
+import { UserAdmin } from '../components/UserAdmin';
+import { HospitalAdmin } from '../components/HospitalAdmin';
+import { PharmacyAdmin } from '../components/PharmacyAdmin';
+import { WarehouseAdmin } from '../components/WarehouseAdmin';
+
 
 export default function BasicSelect() {
   const [selected, setSelected] = React.useState(2);
@@ -32,16 +36,14 @@ export default function BasicSelect() {
             <MenuItem value={2}>Hospitals</MenuItem>
             <MenuItem value={3}>Pharmacies</MenuItem>
             <MenuItem value={4}>Warehouses</MenuItem>
-            <MenuItem value={5}>Drugs</MenuItem>
             </Select>
         </FormControl>
     </Box>
     <div>
       {(selected === 1)? <UserAdmin/>:null}
       {(selected === 2)? <HospitalAdmin/>:null}
-      {(selected === 3)? <HospitalAdmin/>:null}
-      {(selected === 4)? <HospitalAdmin/>:null}
-      {(selected === 5)? <HospitalAdmin/>:null}
+      {(selected === 3)? <PharmacyAdmin/>:null}
+      {(selected === 4)? <WarehouseAdmin/>:null}
     </div>
     </div>
   );

@@ -291,7 +291,7 @@ export function UserAdmin(props) {
                 required
                 fullWidth
                 id="tckNumber"
-                label="User id"
+                label="User TCK"
                 name="tckNumber"
                 autoComplete="tckNumber"
                 value={removeId}
