@@ -20,7 +20,7 @@ export async function login(TCK, password) {
           "password": password
         });
     
-        if (response.data.TCK) {
+        if (typeof(response.data.TCK) === "number") {
           localStorage.setItem('userTCK', response.data.TCK);
           localStorage.setItem('role', response.data.role);
           return true;

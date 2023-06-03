@@ -4,15 +4,17 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { HospitalAdmin } from '../components/HospitalAdmin';
 
 export default function BasicSelect() {
-  const [object, setObject] = React.useState('');
+  const [selected, setSelected] = React.useState(2);
 
   const handleChange = (event) => {
-    setObject(event.target.value);
+    setSelected(event.target.value);
   };
 
   return (
+    <div>
     <Box sx={{ flexGrow: 1, width: '100%' }}>
         <Box sx={{ flexGrow: 1 }}>
             <h1>Admin Screen</h1>
@@ -22,18 +24,21 @@ export default function BasicSelect() {
             <Select
             labelId="object-label"
             id="object"
-            value={object}
+            value={selected}
             label="object"
             onChange={handleChange}
             >
-            <MenuItem value={10}>Users</MenuItem>
-            <MenuItem value={20}>Hospitals</MenuItem>
-            <MenuItem value={30}>Pharmacies</MenuItem>
-            <MenuItem value={30}>Warehouses</MenuItem>
-            <MenuItem value={30}>Drugs</MenuItem>
-            <MenuItem value={30}>Prescriptions</MenuItem>
+            <MenuItem value={1}>Users</MenuItem>
+            <MenuItem value={2}>Hospitals</MenuItem>
+            <MenuItem value={3}>Pharmacies</MenuItem>
+            <MenuItem value={4}>Warehouses</MenuItem>
+            <MenuItem value={5}>Drugs</MenuItem>
             </Select>
         </FormControl>
     </Box>
+    <div>
+      {(selected === 2)? <HospitalAdmin/>:null}
+    </div>
+    </div>
   );
 }

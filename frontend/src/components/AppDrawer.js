@@ -139,12 +139,6 @@ export default function AppDrawer(props) {
   else if(userType === "admin"){
     drawerItems = [
       {
-        id: 0,
-        label: "Home",
-        icon: (<HomeIcon sx={{ color: '#1976d2' }}/>),
-        link: "home",
-      },
-      {
         id: 1,
         label: "Admin",
         icon: (<AdminPanelSettingsIcon sx={{ color: '#1976d2' }}/>),

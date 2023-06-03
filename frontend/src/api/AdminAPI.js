@@ -53,3 +53,25 @@ export async function deleteUser(TCK) {
         console.error(error);
       }
 }
+
+export async function addWarehouse(id, name, city) {
+    try {
+        const response = await axios.post(BASE_URL + "/warehouse/add", {
+          "warehouse_id": id,
+          "warehouse_name": name,
+          "warehouse_city": city,
+        })
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }
+}
+
+export async function deleteWarehouse(id) {
+    try {
+        const response = await axios.delete(BASE_URL + "/warehouse/remove/" + id)
+        return response.data
+      } catch (error) {
+        console.error(error);
+      }
+}
