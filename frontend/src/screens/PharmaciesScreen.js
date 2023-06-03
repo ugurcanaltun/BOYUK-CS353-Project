@@ -8,34 +8,8 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import CloseIcon from '@mui/icons-material/Close';
-import Slide from '@mui/material/Slide';
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-    return <Slide direction="down" ref={ref} {...props} />;
-});
 
 export default function PharmaciesScreen() {
-    const [openDialog, setOpenDialog] = React.useState(false)
-    const handleCloseDialog = () => {
-        setOpenDialog(false)
-    }
-    function ViewButton() {
-        const onClick = () => {
-            setOpenDialog(true)
-        }
-        return (
-            <Button onClick={onClick}>
-                View Details
-            </Button>
-        )
-    }
 
     const rows = [
         {
@@ -43,28 +17,24 @@ export default function PharmaciesScreen() {
             "pharmacistName": "Ugur Can Altun",
             "pharmacyName": "Bilkent",
             "address": "Cankaya/Ankara",
-            "viewButton": <ViewButton/>
         },
         {
             "id": 1,
             "pharmacistName": "Yarkin Sakinci",
             "pharmacyName": "ODTU",
             "address": "Cankaya/Ankara",
-            "viewButton": <ViewButton/>
         },
         {
             "id": 3,
             "pharmacistName": "Boran Torun",
             "pharmacyName": "Hacettepe",
             "address": "Cankaya/Ankara",
-            "viewButton": <ViewButton/>
         },
         {
             "id": 4,
             "pharmacistName": "Ramiz Karaeski",
             "pharmacyName": "Dayi Eczanesi",
             "address": "Istanbul",
-            "viewButton": <ViewButton/>
         }
     ]
 
@@ -82,7 +52,6 @@ export default function PharmaciesScreen() {
                                 <TableCell>Pharmacist Name</TableCell>
                                 <TableCell align="right">Pharmacy Name</TableCell>
                                 <TableCell align="right">Address</TableCell>
-                                <TableCell align="right">Details</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
@@ -96,7 +65,6 @@ export default function PharmaciesScreen() {
                                 </TableCell>
                                 <TableCell align="right">{row.pharmacyName}</TableCell>
                                 <TableCell align="right">{row.address}</TableCell>
-                                <TableCell align="right">{row.viewButton}</TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>
@@ -104,31 +72,6 @@ export default function PharmaciesScreen() {
                     </TableContainer>
                 </Grid>
             </Grid>
-            <Dialog
-                fullScreen
-                open={openDialog}
-                onClose={handleCloseDialog}
-                TransitionComponent={Transition}
-            >
-                <AppBar sx={{ position: 'relative' }}>
-                    <Toolbar>
-                        <IconButton
-                            edge="start"
-                            color="inherit"
-                            onClick={handleCloseDialog}
-                            aria-label="close"
-                        >
-                            <CloseIcon />
-                        </IconButton>
-                        <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                            Pharmacy Details
-                        </Typography>
-                        <Button autoFocus color="inherit" onClick={handleCloseDialog}>
-                            <CloseIcon />
-                        </Button>
-                    </Toolbar>
-                </AppBar>
-            </Dialog>
         </Box>
     );
 }
