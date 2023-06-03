@@ -101,12 +101,6 @@ export default function AppDrawer(props) {
   else if(userType === "doctor"){
     drawerItems = [
       {
-        id: 0,
-        label: "Home",
-        icon: (<HomeIcon sx={{ color: '#1976d2' }}/>),
-        link: "home",
-      },
-      {
         id: 1,
         label: "List Medicines",
         icon: (<ShoppingCartIcon sx={{ color: '#1976d2' }}/>),
@@ -114,9 +108,9 @@ export default function AppDrawer(props) {
       },
       {
         id: 2,
-        label: "My Prescriptions",
+        label: "New Prescription",
         icon: (<ReceiptLongIcon sx={{ color: '#1976d2' }}/>),
-        link: "myprescription",
+        link: "doctorprescription",
       }
     ]
   }
