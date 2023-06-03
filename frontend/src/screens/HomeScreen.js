@@ -39,6 +39,9 @@ export default function HomeScreen() {
     else if (role === "pharmacist") {
       navigate('/home/warehouseorders');
     }
+    else if (role === "admin") {
+      navigate('/home/admin');
+    }
   }, [])
   return (
     <Box sx={{ display: 'flex' }}>
