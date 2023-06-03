@@ -4,8 +4,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { HospitalAdmin } from '../components/HospitalAdmin';
-import { UserAdmin } from '../components/UserAdmin';
+import { HospitalAdmin, WarehouseAdmin, PharmacyAdmin } from '../components/HospitalAdmin';
 
 export default function BasicSelect() {
   const [selected, setSelected] = React.useState(2);
