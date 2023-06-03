@@ -16,6 +16,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import CheckIcon from '@mui/icons-material/Check';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="down" ref={ref} {...props} />;
@@ -23,13 +24,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 export default function WareHouseOrdersScreen() {
     const [openDialog, setOpenDialog] = React.useState(false)
-    const [dialogEnum, setDialogEnum] = React.useState(0)
     const handleCloseDialog = () => {
         setOpenDialog(false)
     }
     function OrderedItemsButton() {
         const onClick = () => {
-            setDialogEnum(1)
             setOpenDialog(true)
         }
         return (
@@ -39,14 +38,13 @@ export default function WareHouseOrdersScreen() {
         )
     }
 
-    function OrderDetailsButton() {
+    function AcceptOrderButton() {
         const onClick = () => {
-            setDialogEnum(2)
-            setOpenDialog(true)
+            //Post function
         }
         return (
             <Button onClick={onClick}>
-                View Order Details
+                <CheckIcon/>
             </Button>
         )
     }
@@ -57,29 +55,56 @@ export default function WareHouseOrdersScreen() {
             "pharmacy": "Faruk Eczanesi",
             "orderedItems": <OrderedItemsButton/>,
             "orderDate": "31/12/2031",
-            "orderDetails": <OrderDetailsButton/>
+            "acceptOrder": <AcceptOrderButton/>
         },
         {
             "id": 1,
             "pharmacy": "Gaylan Eczanesi",
             "orderedItems": <OrderedItemsButton/>,
             "orderDate": "31/12/2031",
-            "orderDetails": <OrderDetailsButton/>
+            "acceptOrder": <AcceptOrderButton/>
         },
         {
             "id": 2,
             "pharmacy": "Kastamanolular Eczanesi",
             "orderedItems": <OrderedItemsButton/>,
             "orderDate": "31/12/2031",
-            "orderDetails": <OrderDetailsButton/>
+            "acceptOrder": <AcceptOrderButton/>
         },
         {
             "id": 3,
             "pharmacy": "Nejat Isler Eczanesi",
             "orderedItems": <OrderedItemsButton/>,
             "orderDate": "31/12/2031",
-            "orderDetails": <OrderDetailsButton/>
+            "acceptOrder": <AcceptOrderButton/>
         }
+    ]
+
+    const drugsExample = [
+        {
+            "id": 0,
+            "drugName": "Pharmaton",
+            "prescriptionStatus": "No Prescription",
+            "drugType": "A",
+            "drugClass": "B",
+            "price": "15$"
+        },
+        {
+            "id": 1,
+            "drugName": "Pharmatonli",
+            "prescriptionStatus": "No Prescription",
+            "drugType": "A",
+            "drugClass": "B",
+            "price": "15$"
+        },
+        {
+            "id": 2,
+            "drugName": "Pharma",
+            "prescriptionStatus": "No Prescription",
+            "drugType": "A",
+            "drugClass": "B",
+            "price": "15$"
+        },
     ]
 
     return(
@@ -96,7 +121,7 @@ export default function WareHouseOrdersScreen() {
                                 <TableCell>Pharmacy</TableCell>
                                 <TableCell align="right">Ordered Items</TableCell>
                                 <TableCell align="right">Order Date</TableCell>
-                                <TableCell align="right">Order Details</TableCell>
+                                <TableCell align="right">Accept Order</TableCell>
                             </TableRow>
                             </TableHead>
                             <TableBody>
@@ -110,7 +135,7 @@ export default function WareHouseOrdersScreen() {
                                 </TableCell>
                                 <TableCell align="right">{row.orderedItems}</TableCell>
                                 <TableCell align="right">{row.orderDate}</TableCell>
-                                <TableCell align="right">{row.orderDetails}</TableCell>
+                                <TableCell align="right">{row.acceptOrder}</TableCell>
                                 </TableRow>
                             ))}
                             </TableBody>
@@ -124,7 +149,6 @@ export default function WareHouseOrdersScreen() {
                 onClose={handleCloseDialog}
                 TransitionComponent={Transition}
             >
-                {dialogEnum == 1 ?
                 <AppBar sx={{ position: 'relative' }}>
                     <Toolbar>
                         <IconButton
@@ -138,29 +162,41 @@ export default function WareHouseOrdersScreen() {
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                             Ordered Items
                         </Typography>
-                        <Button autoFocus color="inherit" onClick={handleCloseDialog}>
-                            <CloseIcon />
-                        </Button>
                     </Toolbar>
-                </AppBar> :
-                <AppBar sx={{ position: 'relative' }}>
-                <Toolbar>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleCloseDialog}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                    <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-                        Order Details
-                    </Typography>
-                    <Button autoFocus color="inherit" onClick={handleCloseDialog}>
-                        <CloseIcon />
-                    </Button>
-                </Toolbar>
-            </AppBar>}
+                    <Grid container>
+                        <Grid item xs={12}>
+                            <TableContainer component={Paper}>
+                                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                                    <TableHead>
+                                    <TableRow>
+                                        <TableCell>Drug Name</TableCell>
+                                        <TableCell align="right">Prescription Status</TableCell>
+                                        <TableCell align="right">Drug Class</TableCell>
+                                        <TableCell align="right">Drug Type</TableCell>
+                                        <TableCell align="right">Price</TableCell>
+                                    </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                    {drugsExample.map((row) => (
+                                        <TableRow
+                                        key={row.id}
+                                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                        >
+                                        <TableCell component="th" scope="row">
+                                            {row.drugName}
+                                        </TableCell>
+                                        <TableCell align="right">{row.prescriptionStatus}</TableCell>
+                                        <TableCell align="right">{row.drugClass}</TableCell>
+                                        <TableCell align="right">{row.drugType}</TableCell>
+                                        <TableCell align="right">{row.price}</TableCell>
+                                        </TableRow>
+                                    ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </Grid>
+                    </Grid>
+                </AppBar> 
             </Dialog>
         </Box>
     );
