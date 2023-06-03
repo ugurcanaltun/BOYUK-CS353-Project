@@ -64,7 +64,7 @@ function DrugCard(props) {
                 disablePortal
                 id="combo-box-demo"
                 getOptionLabel={(p) => p.fullname}
-                onInputChange={(event, newInputValue) => {
+                onChange={(event, newInputValue) => {
                     console.log(newInputValue.TCK)
                     setPatientTCK(newInputValue.TCK);
                 }}
@@ -97,7 +97,7 @@ function DrugCard(props) {
             <h3 className="drug-price">{props.drugPrice}$</h3>
             {
                 localStorage.getItem("role") === "patient"?
-                <>
+                <> {
                 (count===0)?
                 <Button size="small" className="buy-button" variant="contained" onClick={addToCart}>Add To Cart</Button>
                 :
@@ -110,6 +110,7 @@ function DrugCard(props) {
                         <AddIcon />
                     </IconButton>
                 </div>
+                }
                 </>: null   
             }
             {

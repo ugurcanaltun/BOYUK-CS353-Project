@@ -41,17 +41,10 @@ function FilterPane(props) {
         <h5 className="filter-name-title">Companies</h5>
         <div className="filter-list">
         {
+            props.filterValues?
             props.filterValues?.companies.map(c => {
                 return <FilterCheckBox reset={reset} key={c} list={props.filters.companies} name={c} keyValue={c} setFilters={props.setFilters} filters={props.filters} listName="companies" />
-            })
-        }
-        </div>
-        <h5 className="filter-name-title">Side Effects</h5>
-        <div className="filter-list">
-        {
-            props.filterValues?.sideEffects.map(s => {
-                return <FilterCheckBox reset={reset} key={s} list={props.filters.sideEffects} name={"No "+s} keyValue={s} setFilters={props.setFilters} filters={props.filters} listName="sideEffects" />
-            })
+            }):null
         }
         </div>
         

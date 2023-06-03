@@ -5,6 +5,7 @@ import { styled } from '@mui/material/styles';
 import AppDrawer from '../components/AppDrawer';
 import AppBar from '../components/AppBar'
 import { Outlet } from "react-router-dom";
+import { useNavigate  } from 'react-router-dom';
 
 function AppBarAndDrawer () {
     const [open, setOpen] = React.useState(false);
@@ -26,6 +27,19 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }));
 
 export default function HomeScreen() {
+  const navigate = useNavigate();
+  React.useEffect(()=>{
+    let role = localStorage.getItem("role")
+    if (role === "doctor") {
+      navigate('/home/doctorprescription');
+    }
+    else if (role === 'pharmaceuticalwarehouseworker') {
+      navigate('/home/warehouseorders');
+    }
+    else if (role === "pharmacist") {
+      navigate('/home/warehouseorders');
+    }
+  }, [])
   return (
     <Box sx={{ display: 'flex' }}>
         <CssBaseline />
