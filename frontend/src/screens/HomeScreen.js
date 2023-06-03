@@ -31,7 +31,7 @@ export default function HomeScreen() {
   React.useEffect(()=>{
     let role = localStorage.getItem("role")
     if (role === "doctor") {
-      navigate('/home/doctorprescription');
+      navigate('/home/listmedicines');
     }
     else if (role === 'pharmaceuticalwarehouseworker') {
       navigate('/home/warehouseorders');
