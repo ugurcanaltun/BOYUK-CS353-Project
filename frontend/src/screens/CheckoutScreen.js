@@ -1,7 +1,8 @@
 import { Alert, Autocomplete, Button, Card, Snackbar, TextField, ToggleButton } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -25,6 +26,27 @@ import { useNavigate  } from 'react-router-dom';
 import { fetchPharmacies } from "../api/AdminAPI";
 
 export default function CheckoutScreen() {
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#d52b1e',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
     const [cartList, setCartList] = useState([]);
     const [numOfItems, setNumOfItems] = useState(0);
     const [bankAccounts, setBankAccounts] = useState([])
@@ -171,21 +193,21 @@ export default function CheckoutScreen() {
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
-                        <TableRow>
-                            <TableCell>Count</TableCell>
-                            <TableCell>Drug Name</TableCell>
-                            <TableCell>Price</TableCell>
-                        </TableRow>
+                        <StyledTableRow>
+                            <StyledTableCell>Count</StyledTableCell>
+                            <StyledTableCell>Drug Name</StyledTableCell>
+                            <StyledTableCell>Price</StyledTableCell>
+                        </StyledTableRow>
                         </TableHead>
                         <TableBody>
                             {
                                 cartList?
                                 cartList.map(c=>{
-                                    return <TableRow key={c.drug_name}>
-                                            <TableCell>{c.drug_count}</TableCell>
-                                            <TableCell>{c.drug_name}</TableCell>
-                                            <TableCell>${c.price * c.drug_count}</TableCell>
-                                        </TableRow>
+                                    return <StyledTableRow key={c.drug_name}>
+                                            <StyledTableCell>{c.drug_count}</StyledTableCell>
+                                            <StyledTableCell>{c.drug_name}</StyledTableCell>
+                                            <StyledTableCell>${c.price * c.drug_count}</StyledTableCell>
+                                        </StyledTableRow>
                                 }):
                                 <></>
                             }

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { fetchOrders } from "../api/OrdersAPI";
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -11,6 +11,27 @@ import { Button } from "@mui/material";
 import { fetchPatientPrescriptions } from "../api/PrescriptionAPI";
 
 export default function MyPrescriptionsScreen() {
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#d52b1e',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
     const [prescriptions, setPrescriptions] = useState([])
     useEffect(()=> {
         fetchPatientPrescriptions().then(o=> {
@@ -20,13 +41,13 @@ export default function MyPrescriptionsScreen() {
     }, [])
     function PrescriptionItem(props) {
         return (
-            <TableRow>
-                <TableCell component="th" scope="row">{props.date}</TableCell>
-                <TableCell component="th" scope="row">{props.drugName}</TableCell>
-                <TableCell component="th" scope="row">{props.doctorName}</TableCell>
-                <TableCell component="th" scope="row">{props.illness}</TableCell>
-                <TableCell component="th" scope="row">{props.expertise}</TableCell>
-            </TableRow>
+            <StyledTableRow>
+                <StyledTableCell component="th" scope="row">{props.date}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{props.drugName}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{props.doctorName}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{props.illness}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{props.expertise}</StyledTableCell>
+            </StyledTableRow>
         )
     }
     return(
@@ -36,13 +57,13 @@ export default function MyPrescriptionsScreen() {
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
-                        <TableRow>
-                            <TableCell>Prescription Date</TableCell>
-                            <TableCell>Drug Name</TableCell>
-                            <TableCell>Doctor Name</TableCell>
-                            <TableCell>Illness</TableCell>
-                            <TableCell>Expertise Field</TableCell>
-                        </TableRow>
+                        <StyledTableRow>
+                            <StyledTableCell>Prescription Date</StyledTableCell>
+                            <StyledTableCell>Drug Name</StyledTableCell>
+                            <StyledTableCell>Doctor Name</StyledTableCell>
+                            <StyledTableCell>Illness</StyledTableCell>
+                            <StyledTableCell>Expertise Field</StyledTableCell>
+                        </StyledTableRow>
                         </TableHead>
                         <TableBody>
                             {
