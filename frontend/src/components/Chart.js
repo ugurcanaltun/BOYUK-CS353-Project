@@ -35,25 +35,25 @@ export default function Chart() {
         <div className="anal-list">
           {
             doctorAnal?
-            <div className='anal-item'>
+            <div className='anal-item-doctor'>
               <h5>Doctor with most precriptions</h5>
               <p>Dr.{doctorAnal.doctor_fullname}</p>
-              {doctorAnal.presc_count}
-              prescriptions
+              {doctorAnal.presc_count} prescriptions
             </div>: null
           }
           {
             drugAnal?
-            <div className='anal-item'>
+            <div className='anal-item-order-count' >
               <h5>You ordered</h5>
               {drugAnal.drug_name}
-              {drugAnal.order_count}
-              times
+              {drugAnal.order_count ?
+              drugAnal.order_count :
+              0} times
             </div>: null
           }
           {
             moneyAnal?
-            <div className='anal-item'>
+            <div className='anal-item-average'>
               <h5>Your monthly average spending</h5>
               {moneyAnal.average_spent}
             </div>: null
