@@ -11,6 +11,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { BASE_URL } from '../api/BaseURL';
+import axios from "axios";
 
 const defaultTheme = createTheme();
 
@@ -24,6 +26,20 @@ export default function AddNewDrugScreen() {
     async function handleSubmit(event){
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        let drugNew = {
+            "name": data.get('drugName'),
+            "needs_prescription": prescription,
+            "drug_class": data.get('drugClass'),
+            "drug_type": data.get("drugType"),
+            "price": data.get("drugPrice")
+        }
+        axios.post(BASE_URL + "/drug/registerDrug", drugNew).then(
+            function (response) {
+                console.log(response);
+            }
+        ).catch(function (error) {
+            console.log(error);
+        });
 
     };
 
@@ -90,8 +106,8 @@ export default function AddNewDrugScreen() {
                                 label="Prescription"
                                 onChange={handlePrescriptionChange}
                             >
-                                <MenuItem value={"prescription"}>Needs Prescription</MenuItem>
-                                <MenuItem value={"noPrescription"}>No Prescription</MenuItem>
+                                <MenuItem value={"yes"}>Needs Prescription</MenuItem>
+                                <MenuItem value={"no"}>No Prescription</MenuItem>
                             </Select>
                         </FormControl>
                     </Grid>
