@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { useEffect, useState } from "react";
+import { fetchUserInfo } from '../api/UserAPI';
 import { styled } from '@mui/material/styles';
 import MuiAppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -34,7 +36,31 @@ const AppBar = styled(MuiAppBar, {
 
 export default function AppNavbar(props) {
     const userType = localStorage.getItem("role")
+    const [username, setUsername] = useState("")
+    const [userRole, setUserRole] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        fetchUserInfo().then(u=> {
+            console.log(u)
+            setUsername(u.fullname)
+        })
+        if(userType === "patient"){
+            setUserRole("Patient")
+        }
+        if(userType === "doctor"){
+            setUserRole("Doctor")
+        }
+        if(userType === "pharmacist"){
+            setUserRole("Pharmacist")
+        }
+        if(userType === "admin"){
+            setUserRole("Admin")
+        }
+        if(userType === "pharmaceuticalwarehouseworker"){
+            setUserRole("Pharmaceutical Warehouse Worker")
+        }
+    }, [])
 
     const handleLogout = (e) => {
         logout()
@@ -74,6 +100,17 @@ export default function AppNavbar(props) {
                 >
                     PharmHub
                 </Typography>
+
+                <Typography
+                component="h4"
+                variant="h6"
+                color="inherit"
+                noWrap
+                sx={{ flexGrow: 1 }}
+                >
+                    {username} - {userRole}
+                </Typography>
+
                 { userType === "patient" ?
                 <IconButton href='cart' color="inherit">
                     <ShoppingCartIcon />

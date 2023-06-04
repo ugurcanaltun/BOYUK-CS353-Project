@@ -60,7 +60,6 @@ export default function CheckoutScreen() {
     const navigate = useNavigate();
     
     useEffect(() => {
-        console.log("sikiş")
         fetchCart().then(c => {
             setCartList(c)
             setNumOfItems(0)
