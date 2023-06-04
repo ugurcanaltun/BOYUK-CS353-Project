@@ -1,7 +1,8 @@
-import { Button, Card, IconButton } from "@mui/material";
+import { Button, IconButton } from "@mui/material";
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -14,6 +15,27 @@ import { fetchCart } from "../api/CartAPI";
 import { cartAdd, cartRemove } from "../api/CartAPI";
 
 export default function CartScreen() {
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#d52b1e',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
     const [cartList, setCartList] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0)
     useEffect(() => {
@@ -48,8 +70,8 @@ export default function CartScreen() {
             
         }
         return (
-            <TableRow>
-                <TableCell>
+            <StyledTableRow>
+                <StyledTableCell>
                     <div className="cart-section">
                         <IconButton onClick={removeFromCart}>
                             <RemoveIcon />
@@ -59,13 +81,13 @@ export default function CartScreen() {
                             <AddIcon />
                         </IconButton>
                     </div>
-                </TableCell>
+                </StyledTableCell>
                 
-                <TableCell component="th" scope="row">{props.drugName}</TableCell>
-                <TableCell component="th" scope="row">{props.company}</TableCell>
-                <TableCell component="th" scope="row">{props.prescribred}</TableCell>
-                <TableCell component="th" scope="row">${props.price * count}</TableCell>
-            </TableRow>
+                <StyledTableCell component="th" scope="row">{props.drugName}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{props.company}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">{props.prescribred}</StyledTableCell>
+                <StyledTableCell component="th" scope="row">${props.price * count}</StyledTableCell>
+            </StyledTableRow>
         )
     }
     return(
@@ -83,13 +105,13 @@ export default function CartScreen() {
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
                         <TableHead>
-                        <TableRow>
-                            <TableCell></TableCell>
-                            <TableCell>Drug Name</TableCell>
-                            <TableCell>Company</TableCell>
-                            <TableCell>Needs Prescription</TableCell>
-                            <TableCell>Price</TableCell>
-                        </TableRow>
+                        <StyledTableRow>
+                            <StyledTableCell></StyledTableCell>
+                            <StyledTableCell>Drug Name</StyledTableCell>
+                            <StyledTableCell>Company</StyledTableCell>
+                            <StyledTableCell>Needs Prescription</StyledTableCell>
+                            <StyledTableCell>Price</StyledTableCell>
+                        </StyledTableRow>
                         </TableHead>
                         <TableBody>
                             {
@@ -99,14 +121,14 @@ export default function CartScreen() {
                                 })
                                 : <p>Noo</p>
                             }
-                            <TableRow>
-                            <TableCell></TableCell>
+                            <StyledTableRow>
+                            <StyledTableCell></StyledTableCell>
                             
-                            <TableCell component="th" scope="row"></TableCell>
-                            <TableCell component="th" scope="row"></TableCell>
-                            <TableCell component="th" scope="row"></TableCell>
-                            <TableCell component="th" scope="row">Total: ${totalPrice}</TableCell>
-                        </TableRow>
+                            <StyledTableCell component="th" scope="row"></StyledTableCell>
+                            <StyledTableCell component="th" scope="row"></StyledTableCell>
+                            <StyledTableCell component="th" scope="row"></StyledTableCell>
+                            <StyledTableCell component="th" scope="row">Total: ${totalPrice}</StyledTableCell>
+                        </StyledTableRow>
                         </TableBody>
                     </Table>
                 </TableContainer>

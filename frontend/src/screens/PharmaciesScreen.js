@@ -2,15 +2,36 @@ import { useEffect, useState } from "react"
 import { fetchPharmacyList } from "../api/WarehouseAPI";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 export default function PharmaciesScreen() {
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#d52b1e',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
 
     const [rows, setRows] = useState([])
 
@@ -31,20 +52,20 @@ export default function PharmaciesScreen() {
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
-                            <TableRow>
-                                <TableCell>Pharmacy Name</TableCell>
-                                <TableCell>Address</TableCell>
-                            </TableRow>
+                            <StyledTableRow>
+                                <StyledTableCell>Pharmacy Name</StyledTableCell>
+                                <StyledTableCell>Address</StyledTableCell>
+                            </StyledTableRow>
                             </TableHead>
                             <TableBody>
                             {rows.map((row, index) => (
-                                <TableRow
+                                <StyledTableRow
                                 key={index}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                <TableCell>{row.pharm_name}</TableCell>
-                                <TableCell>{row.pharm_city}</TableCell>
-                                </TableRow>
+                                <StyledTableCell>{row.pharm_name}</StyledTableCell>
+                                <StyledTableCell>{row.pharm_city}</StyledTableCell>
+                                </StyledTableRow>
                             ))}
                             </TableBody>
                         </Table>

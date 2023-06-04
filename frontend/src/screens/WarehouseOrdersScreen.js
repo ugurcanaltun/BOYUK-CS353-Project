@@ -16,7 +16,7 @@ export default function WareHouseOrdersScreen() {
 
     const StyledTableCell = styled(TableCell)(({ theme }) => ({
         [`&.${tableCellClasses.head}`]: {
-          backgroundColor: '#D52B1E',
+          backgroundColor: '#d52b1e',
           color: theme.palette.common.white,
         },
         [`&.${tableCellClasses.body}`]: {
