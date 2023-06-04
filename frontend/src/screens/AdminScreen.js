@@ -22,6 +22,7 @@ export default function BasicSelect() {
   React.useEffect(()=>{
     if (success) {
       setSnackOpen(true)
+      setSuccess(false)
     }
   }, [success])
 
