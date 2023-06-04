@@ -4,17 +4,17 @@ import FilterCheckBox from "./FilterCheckBox";
 
 function FilterPane(props) {
     const [reset, setReset] = useState(false)
-    const [priceRange, setPriceRange] = useState([0,props.filterValues.priceRange])
+    const [priceRange, setPriceRange] = useState([0,props.filterValues.range])
     
     function removeFilters() {
         setReset(true)
-        setPriceRange([0,props.filterValues.priceRange])
+        setPriceRange([0,props.filterValues.range])
         props.setFilters({
             ...props.filters,
             companies: [],
             sideEffects: [],
             min_price: 0,
-            max_price: props.filterValues.priceRange,
+            max_price: props.filterValues.range,
             prescribed: 2
         })
         setTimeout(function(){

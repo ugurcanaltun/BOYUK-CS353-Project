@@ -37,8 +37,9 @@ export default function Chart() {
             doctorAnal?
             <div className='anal-item'>
               <h5>Doctor with most precriptions</h5>
-              {doctorAnal.doctor_fullname}
+              <p>Dr.{doctorAnal.doctor_fullname}</p>
               {doctorAnal.presc_count}
+              prescriptions
             </div>: null
           }
           {

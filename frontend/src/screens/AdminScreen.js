@@ -4,15 +4,33 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { UserAdmin } from '../components/UserAdmin';
+import { HospitalAdmin } from '../components/HospitalAdmin';
+import { PharmacyAdmin } from '../components/PharmacyAdmin';
+import { WarehouseAdmin } from '../components/WarehouseAdmin';
+import { Alert, Snackbar } from '@mui/material';
 
 export default function BasicSelect() {
-  const [object, setObject] = React.useState('');
+  const [selected, setSelected] = React.useState(2);
+  const [success, setSuccess] = React.useState(false);
+  const [snackOpen, setSnackOpen] = React.useState(false)
 
   const handleChange = (event) => {
-    setObject(event.target.value);
+    setSelected(event.target.value);
   };
 
+  React.useEffect(()=>{
+    if (success) {
+      setSnackOpen(true)
+    }
+  }, [success])
+
+  function handleSnackClose() {
+    setSnackOpen(false)
+  }
+
   return (
+    <div>
     <Box sx={{ flexGrow: 1, width: '100%' }}>
         <Box sx={{ flexGrow: 1 }}>
             <h1>Admin Screen</h1>
@@ -22,18 +40,28 @@ export default function BasicSelect() {
             <Select
             labelId="object-label"
             id="object"
-            value={object}
+            value={selected}
             label="object"
             onChange={handleChange}
             >
-            <MenuItem value={10}>Users</MenuItem>
-            <MenuItem value={20}>Hospitals</MenuItem>
-            <MenuItem value={30}>Pharmacies</MenuItem>
-            <MenuItem value={30}>Warehouses</MenuItem>
-            <MenuItem value={30}>Drugs</MenuItem>
-            <MenuItem value={30}>Prescriptions</MenuItem>
+            <MenuItem value={1}>Users</MenuItem>
+            <MenuItem value={2}>Hospitals</MenuItem>
+            <MenuItem value={3}>Pharmacies</MenuItem>
+            <MenuItem value={4}>Warehouses</MenuItem>
             </Select>
         </FormControl>
     </Box>
+    <div>
+      {(selected === 1)? <UserAdmin setSuccess={setSuccess}/>:null}
+      {(selected === 2)? <HospitalAdmin setSuccess={setSuccess}/>:null}
+      {(selected === 3)? <PharmacyAdmin setSuccess={setSuccess}/>:null}
+      {(selected === 4)? <WarehouseAdmin setSuccess={setSuccess}/>:null}
+    </div>
+    <Snackbar open={snackOpen} autoHideDuration={4000} onClose={handleSnackClose} anchorOrigin={{ vertical:"bottom",horizontal:"right" }}>
+          <Alert onClose={handleSnackClose} severity="success" sx={{ width: '100%' }}>
+              Operation Successful
+          </Alert>
+      </Snackbar>
+    </div>
   );
 }
