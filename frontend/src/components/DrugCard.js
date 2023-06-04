@@ -9,21 +9,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { fetchPatients } from "../api/UserAPI";
 import { prescribeDrug } from "../api/PrescriptionAPI";
 
 function DrugCard(props) {
     const [count, setCount] = useState(props.count)
     const [dialogOpen, setDialogOpen] = useState(false)
-    const [patients, setPatients] = useState([])
-    
-
-    useEffect(()=>{
-        fetchPatients().then(p=>{
-            console.log(p)
-            setPatients(p)
-        })
-    }, [])
 
     function addToCart() {
         cartAdd(props.drugName, 1)
@@ -34,8 +24,6 @@ function DrugCard(props) {
         cartRemove(props.drugName, 1)
         setCount(count - 1)
     }
-
-    
 
     function PrescriptionDialog() {
         const [patientTCK, setPatientTCK] = useState("")
@@ -59,18 +47,24 @@ function DrugCard(props) {
               <DialogContentText>
                 Select patient name to prescribe the drug
               </DialogContentText>
-              <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                getOptionLabel={(p) => p.fullname}
-                onChange={(event, newInputValue) => {
-                    console.log(newInputValue.TCK)
-                    setPatientTCK(newInputValue.TCK);
-                }}
-                options={patients}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Patients" />}
-                />
+                {
+                    props.patients?
+                    <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    getOptionLabel={(p) => p.fullname}
+                    onChange={(event, newInputValue) => {
+                        console.log(newInputValue.TCK)
+                        setPatientTCK(newInputValue.TCK);
+                    }}
+                    options={props.patients}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Patients" />}
+                    />
+                    :
+                    null
+                }
+             
                 <TextField
                     autoFocus
                     value={illness}
