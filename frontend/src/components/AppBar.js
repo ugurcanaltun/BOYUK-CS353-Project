@@ -6,12 +6,17 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { logout } from '../api/UserAPI';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { Button } from '@mui/material';
+import { useNavigate  } from 'react-router-dom';
 
 const drawerWidth = 240;
 
 const AppBar = styled(MuiAppBar, {
     shouldForwardProp: (prop) => prop !== 'open',
 })(({ theme, open }) => ({
+    backgroundColor: "#a11208",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(['width', 'margin'], {
         easing: theme.transitions.easing.sharp,
@@ -28,6 +33,13 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function AppNavbar(props) {
+    const navigate = useNavigate();
+
+    const handleLogout = (e) => {
+        logout()
+        navigate('/');
+    }
+
     const handleDrawerOpen = () => {
         props.setOpen(true);
     };
@@ -64,6 +76,9 @@ export default function AppNavbar(props) {
                 <IconButton href='cart' color="inherit">
                     <ShoppingCartIcon />
                 </IconButton>
+                <Button className='logout-button' onClick={handleLogout}>
+                    <LogoutIcon />
+                </Button>
             </Toolbar>
         </AppBar>
     );
