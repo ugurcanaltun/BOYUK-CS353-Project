@@ -12,7 +12,6 @@ function FilterPane(props) {
         props.setFilters({
             ...props.filters,
             companies: [],
-            sideEffects: [],
             min_price: 0,
             max_price: props.filterValues.range,
             prescribed: 2
