@@ -104,5 +104,10 @@ export async function deleteWarehouse(id) {
 }
 
 export async function fetchWarehouses() {
-
+  try {
+    const response = await axios.get(BASE_URL + "/warehouse/all")
+    return response.data
+  } catch (error) {
+    console.error(error);
+  }
 }

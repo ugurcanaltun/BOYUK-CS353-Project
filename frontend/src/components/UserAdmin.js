@@ -1,6 +1,6 @@
 import { Button, TextField } from "@mui/material"
-import { addHospital, deleteHospital, deleteUser } from "../api/AdminAPI"
-import { useState } from "react"
+import { addHospital, deleteHospital, deleteUser, fetchUsers } from "../api/AdminAPI"
+import { useEffect, useState } from "react"
 import { register } from "../api/UserAPI";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
@@ -18,6 +18,15 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+
 export function UserAdmin(props) {
     const [removeId, setRemoveId] = useState()
     const [role, setRole] = useState("");
@@ -33,6 +42,33 @@ export function UserAdmin(props) {
     const [bankAccountNo, setBankAccountNo] = useState("");
     const [warehouseId, setWarehouseId] = useState("");
     const [pharmacyId, setPharmacyId] = useState("");
+    const [userList, setUserList] = useState([])
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#D52B1E',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
+    useEffect(()=>{
+        fetchUsers().then(u=>{
+            setUserList(u)
+        })
+    }, [])
 
     const handleCloseDialog = () => {
         setOpenDialog(false);
@@ -67,6 +103,9 @@ export function UserAdmin(props) {
             if (data === "success") {
                 props.setSuccess(true)
             }
+            fetchUsers().then(u=>{
+                setUserList(u)
+            })
           })
     }
     function removeUser() {
@@ -74,6 +113,9 @@ export function UserAdmin(props) {
             if (r === "success") {
                 props.setSuccess(true)
             }
+            fetchUsers().then(u=>{
+                setUserList(u)
+            })
         })
     }
 
@@ -83,8 +125,42 @@ export function UserAdmin(props) {
     };
 
     return(
-        <div>
+        <div className="admin-panel-container">
             <div>
+            <Grid className="admin-list" container>
+                <Grid item xs={12}>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                            <StyledTableRow>
+                                <StyledTableCell>TCK</StyledTableCell>
+                                <StyledTableCell>Full Name</StyledTableCell>
+                                <StyledTableCell>Role</StyledTableCell>
+                            </StyledTableRow>
+                            </TableHead>
+                            <TableBody>
+                            {
+                            userList?
+                            userList.map((u, index) => (
+                                <StyledTableRow
+                                    key={index}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <StyledTableCell component="th" scope="row">
+                                        {u.TCK}
+                                    </StyledTableCell>
+                                    <StyledTableCell>{u.fullname}</StyledTableCell>
+                                    <StyledTableCell>{u.role}</StyledTableCell>
+                                </StyledTableRow>
+                            )):<></>
+                        }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+            </Grid>
+            </div>
+            <div className="admin-form">
             <h3>Add User</h3>
             <Box component="form" noValidate sx={{ mt: 3 }}>
                 <Grid container spacing={2}>
@@ -284,8 +360,8 @@ export function UserAdmin(props) {
                 </DialogActions>
             </Dialog>
             <Button onClick={addNewUser}>Add User</Button>
-            </div>
-                <h3>Remove User</h3>
+
+            <h3>Remove User</h3>
                 <TextField
                 margin="normal"
                 required
@@ -299,8 +375,6 @@ export function UserAdmin(props) {
                 autoFocus
                 />
                 <Button onClick={removeUser}>Remove User</Button>
-            <div>
-
             </div>
         </div>
     )

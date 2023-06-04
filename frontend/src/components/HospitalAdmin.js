@@ -49,6 +49,9 @@ export function HospitalAdmin(props) {
             if (r === "success") {
                 props.setSuccess(true)
             }
+            fetchHospitals().then(h=>{
+                setHospitalList(h)
+            })
         })
     }
     
@@ -57,6 +60,9 @@ export function HospitalAdmin(props) {
             if (r === "success") {
                 props.setSuccess(true)
             }
+            fetchHospitals().then(h=>{
+                setHospitalList(h)
+            })
         })
     }
 
