@@ -13,6 +13,18 @@ export async function fetchPatientPrescriptions() {
     }
 }
 
+export async function fetchDoctorPrescriptions() {
+  let TCK = localStorage.getItem("userTCK");
+  try {
+    const response = await axios.post(BASE_URL + "/prescription/listPrescriptions",{
+      "doctor_TCK": TCK
+    })
+    return response.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function prescribeDrug(patientTCK, drugName, illness) {
     let TCK = localStorage.getItem("userTCK");
     try {

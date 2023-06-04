@@ -53,6 +53,9 @@ export default function SignUp() {
 
   const handleRoleChange = (event) => {
     setRole(event.target.value);
+    if (event.target.value === "patient") {
+      return
+    }
     setOpenDialog(true);
   };
 

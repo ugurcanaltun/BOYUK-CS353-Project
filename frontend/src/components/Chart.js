@@ -31,7 +31,7 @@ export default function Chart() {
   return (
     <div>
       <div>
-        <Title>Recent Orders</Title>
+        <Title>Analyses</Title>
         <div className="anal-list">
           {
             doctorAnal?

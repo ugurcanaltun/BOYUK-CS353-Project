@@ -108,6 +108,7 @@ export function UserAdmin(props) {
             })
           })
     }
+
     function removeUser() {
         deleteUser(removeId).then(r=>{
             if (r === "success") {
@@ -121,6 +122,9 @@ export function UserAdmin(props) {
 
     const handleRoleChange = (event) => {
         setRole(event.target.value);
+        if (event.target.value === "patient") {
+            return
+        }
         setOpenDialog(true);
     };
 
