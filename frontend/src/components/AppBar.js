@@ -33,6 +33,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 export default function AppNavbar(props) {
+    const userType = localStorage.getItem("role")
     const navigate = useNavigate();
 
     const handleLogout = (e) => {
@@ -73,10 +74,14 @@ export default function AppNavbar(props) {
                 >
                     PharmHub
                 </Typography>
+                { userType === "patient" ?
                 <IconButton href='cart' color="inherit">
                     <ShoppingCartIcon />
                 </IconButton>
-                <Button className='logout-button' onClick={handleLogout}>
+                :
+                <></>
+                }
+                <Button className='logout-button' onClick={handleLogout} sx={{color: "#ffff"}}>
                     <LogoutIcon />
                 </Button>
             </Toolbar>
