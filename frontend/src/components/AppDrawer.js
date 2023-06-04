@@ -18,6 +18,8 @@ import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import HomeIcon from '@mui/icons-material/Home';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import CreateIcon from '@mui/icons-material/Create';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import { Link } from 'react-router-dom';
 import "../css/Bank.css"
 
@@ -94,13 +96,13 @@ export default function AppDrawer(props) {
     drawerItems = [
       {
         id: 1,
-        label: "List Medicines",
-        icon: (<ShoppingCartIcon sx={{ color: '#a11208' }}/>),
+        label: "New Prescription",
+        icon: (<CreateIcon sx={{ color: '#a11208' }}/>),
         link: "listmedicines",
       },
       {
         id: 2,
-        label: "New Prescription",
+        label: "View Prescriptions",
         icon: (<ReceiptLongIcon sx={{ color: '#a11208' }}/>),
         link: "doctorprescription",
       }
@@ -111,7 +113,7 @@ export default function AppDrawer(props) {
       {
         id: 1,
         label: "List Medicines",
-        icon: (<ShoppingCartIcon sx={{ color: '#a11208' }}/>),
+        icon: (<FormatListBulletedIcon sx={{ color: '#a11208' }}/>),
         link: "viewmedicines",
       },
       {
