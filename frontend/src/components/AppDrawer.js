@@ -153,7 +153,7 @@ export default function AppDrawer(props) {
       }
     ]
   }
-  else if(userType === "warehouseworker"){
+  else if(userType === "pharmaceuticalwarehouseworker"){
     drawerItems = [
       {
         id: 0,
