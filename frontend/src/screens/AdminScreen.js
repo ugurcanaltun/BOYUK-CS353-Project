@@ -9,6 +9,7 @@ import { HospitalAdmin } from '../components/HospitalAdmin';
 import { PharmacyAdmin } from '../components/PharmacyAdmin';
 import { WarehouseAdmin } from '../components/WarehouseAdmin';
 import { Alert, Snackbar } from '@mui/material';
+import "../css/Admin.css"
 
 export default function BasicSelect() {
   const [selected, setSelected] = React.useState(2);
@@ -42,7 +43,7 @@ export default function BasicSelect() {
             labelId="object-label"
             id="object"
             value={selected}
-            label="object"
+            label="Area"
             onChange={handleChange}
             >
             <MenuItem value={1}>Users</MenuItem>

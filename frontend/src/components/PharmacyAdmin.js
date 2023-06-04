@@ -1,18 +1,57 @@
 import { Button, TextField } from "@mui/material"
-import { addPharmacy, deletePharmacy } from "../api/AdminAPI"
-import { useState } from "react"
+import { addPharmacy, deletePharmacy, fetchPharmacies } from "../api/AdminAPI"
+import { useEffect, useState } from "react"
+import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 export function PharmacyAdmin(props){
     const [pharmIdToAdd, setPharmIdToAdd] = useState("")
     const [pharmIdToRemove, setPharmIdToRemove] = useState("")
     const [pharmName, setPharmName] = useState("")
     const [pharmCity, setPharmCity] = useState("")
+    const [pharmList, setPharmList] = useState([])
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#D52B1E',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
+    useEffect(()=>{
+        fetchPharmacies().then(p=>{
+            setPharmList(p)
+        })
+    }, [])
 
     function addNewPharmacy(){
         addPharmacy(pharmIdToAdd, pharmName, pharmCity).then(r=>{
             if (r === "success") {
                 props.setSuccess(true)
             }
+            fetchPharmacies().then(p=>{
+                setPharmList(p)
+            })
         })
     }
 
@@ -21,12 +60,49 @@ export function PharmacyAdmin(props){
             if (r === "success") {
                 props.setSuccess(true)
             }
+            fetchPharmacies().then(p=>{
+                setPharmList(p)
+            })
         })
     }
 
     return(
-        <div>
+        <div className="admin-panel-container">
             <div>
+            <Grid className="admin-list" container>
+                <Grid item xs={12}>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                            <StyledTableRow>
+                                <StyledTableCell>Pharmacy Id</StyledTableCell>
+                                <StyledTableCell>Pharmacy Name</StyledTableCell>
+                                <StyledTableCell>Pharmacy City</StyledTableCell>
+                            </StyledTableRow>
+                            </TableHead>
+                            <TableBody>
+                            {
+                            pharmList?
+                            pharmList.map((p, index) => (
+                                <StyledTableRow
+                                    key={index}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <StyledTableCell component="th" scope="row">
+                                        {p.pharmacy_id}
+                                    </StyledTableCell>
+                                    <StyledTableCell>{p.pharm_name}</StyledTableCell>
+                                    <StyledTableCell>{p.pharm_city}</StyledTableCell>
+                                </StyledTableRow>
+                            )):<></>
+                        }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Grid>
+            </Grid>
+            </div>
+            <div className="admin-form">
                 <h3>Add Pharmacy</h3>
                 <TextField
                 margin="normal"
@@ -65,7 +141,7 @@ export function PharmacyAdmin(props){
                 autoFocus
                 />
                 <Button onClick={addNewPharmacy}>Add Pharmacy</Button>
-            </div>
+
                 <h3>Remove Pharmacy</h3>
                 <TextField
                 margin="normal"
@@ -80,9 +156,8 @@ export function PharmacyAdmin(props){
                 autoFocus
                 />
                 <Button onClick={removePharmacy}>Remove Pharmacy</Button>
-            <div>
-
             </div>
+                
         </div>
     )
 }

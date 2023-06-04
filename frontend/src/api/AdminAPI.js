@@ -24,7 +24,12 @@ export async function deleteHospital(hospId) {
 }
 
 export async function fetchHospitals() {
-
+    try {
+      const response = await axios.get(BASE_URL + "/hospital/all")
+      return response.data
+    } catch (error) {
+      console.error(error);
+    }
 }
 
 export async function addPharmacy(id, name, city) {
@@ -68,7 +73,12 @@ export async function deleteUser(TCK) {
 }
 
 export async function fetchUsers() {
-
+  try {
+    const response = await axios.get(BASE_URL + "/user/all")
+    return response.data
+  } catch (error) {
+    console.error(error);
+  }
 }
 
 export async function addWarehouse(id, name, city) {

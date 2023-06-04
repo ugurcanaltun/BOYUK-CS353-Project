@@ -1,0 +1,20 @@
+.admin-panel-container {
+    display: grid;
+    grid-template-columns: 15fr, 8fr;
+    gap: 15px;
+    margin-top: 20px;
+    
+}
+
+.admin-list {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    overflow-y: scroll;
+    max-height: 60vh;
+    min-height: 60vh;
+}
+
+.admin-form {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
