@@ -6,6 +6,7 @@ import { fetchFilterValues, fetchDrugs } from "../api/DrugAPI";
 import SearchIcon from '@mui/icons-material/Search';
 import '../css/Drugs.css'
 import { fetchCart } from "../api/CartAPI";
+import { fetchPatients } from "../api/UserAPI";
 
 function DrugsScreen() {
     const [searchText, setSearchText] = useState("");
@@ -21,9 +22,9 @@ function DrugsScreen() {
     const [filterValues, setFilterValues] = useState();
     const [drugs, setDrugs] = useState();
     const [selected, setSelected] = useState("all");
-
     const [cart, setCart] = useState([])
-
+    const [patients, setPatients] = useState([])
+    
     useEffect(() => {
         fetchFilterValues().then(f => {
             setFilterValues(f)
@@ -32,10 +33,12 @@ function DrugsScreen() {
                 max: f.priceRange
             }})
         })
-    }, [])
 
-    useEffect(() => {
-        
+        if (localStorage.getItem("role") === "doctor") {
+            fetchPatients().then(p=>{
+                setPatients(p)
+            })
+        }
     }, [])
     
     useEffect(() => {
@@ -98,8 +101,8 @@ function DrugsScreen() {
                         drugs?
                         drugs.map(d=>{
                             return (cart.some(c=>c.drug_name === d.name))?
-                            <DrugCard key={d.name} count={cart.find((c)=>c.drug_name===d.name)["drug_count"]} drugName={d.name} drugPrice={d.price}/>:
-                            <DrugCard key={d.name} count={0} drugName={d.name} drugPrice={d.price}/>
+                            <DrugCard patients={patients} key={d.name} count={cart.find((c)=>c.drug_name===d.name)["drug_count"]} drugName={d.name} drugPrice={d.price}/>:
+                            <DrugCard patients={patients} key={d.name} count={0} drugName={d.name} drugPrice={d.price}/>
                         }): null
                     }
                     
