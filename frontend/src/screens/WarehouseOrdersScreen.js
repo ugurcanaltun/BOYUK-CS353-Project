@@ -2,9 +2,10 @@ import { useEffect, useState } from "react"
 import { fetchWarehouseOrders } from "../api/WarehouseAPI";
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
@@ -12,6 +13,27 @@ import Paper from '@mui/material/Paper';
 import { fetchUserInfo } from "../api/UserAPI";
 
 export default function WareHouseOrdersScreen() {
+
+    const StyledTableCell = styled(TableCell)(({ theme }) => ({
+        [`&.${tableCellClasses.head}`]: {
+          backgroundColor: '#1976d2',
+          color: theme.palette.common.white,
+        },
+        [`&.${tableCellClasses.body}`]: {
+          fontSize: 14,
+        },
+    }));
+
+    const StyledTableRow = styled(TableRow)(({ theme }) => ({
+        '&:nth-of-type(odd)': {
+            backgroundColor: theme.palette.action.hover,
+        },
+        // hide last border
+        '&:last-child td, &:last-child th': {
+            border: 0,
+        },
+    }));
+
     const [rows, setRows] = useState([])
 
     useEffect(() => {
@@ -35,28 +57,28 @@ export default function WareHouseOrdersScreen() {
                     <TableContainer component={Paper}>
                         <Table sx={{ minWidth: 650 }} aria-label="simple table">
                             <TableHead>
-                            <TableRow>
-                                <TableCell>Pharmacy</TableCell>
-                                <TableCell>Drug Name</TableCell>
-                                <TableCell>Restock Count</TableCell>
-                                <TableCell>Restock Date</TableCell>
-                            </TableRow>
+                            <StyledTableRow>
+                                <StyledTableCell>Pharmacy</StyledTableCell>
+                                <StyledTableCell>Drug Name</StyledTableCell>
+                                <StyledTableCell>Restock Count</StyledTableCell>
+                                <StyledTableCell>Restock Date</StyledTableCell>
+                            </StyledTableRow>
                             </TableHead>
                             <TableBody>
                             {
                             rows?
                             rows.map((row, index) => (
-                                <TableRow
-                                key={index}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                <StyledTableRow
+                                    key={index}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
-                                <TableCell component="th" scope="row">
-                                    {row.pharm_name}
-                                </TableCell>
-                                <TableCell>{row.drug_name}</TableCell>
-                                <TableCell>{row.restock_count}</TableCell>
-                                <TableCell>{row.restock_date}</TableCell>
-                                </TableRow>
+                                    <StyledTableCell component="th" scope="row">
+                                        {row.pharm_name}
+                                    </StyledTableCell>
+                                    <StyledTableCell>{row.drug_name}</StyledTableCell>
+                                    <StyledTableCell>{row.restock_count}</StyledTableCell>
+                                    <StyledTableCell>{row.restock_date}</StyledTableCell>
+                                </StyledTableRow>
                             )):<></>
                         }
                             </TableBody>
