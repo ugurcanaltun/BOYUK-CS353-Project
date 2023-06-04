@@ -1,8 +1,8 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
+import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
@@ -11,6 +11,27 @@ import { fetchOrders } from "../api/OrdersAPI";
 import { Button } from "@mui/material";
 
 export default function Orders() {
+
+  const StyledTableCell = styled(TableCell)(({ theme }) => ({
+      [`&.${tableCellClasses.head}`]: {
+        backgroundColor: '#d52b1e',
+        color: theme.palette.common.white,
+      },
+      [`&.${tableCellClasses.body}`]: {
+        fontSize: 14,
+      },
+  }));
+
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+      '&:nth-of-type(odd)': {
+          backgroundColor: theme.palette.action.hover,
+      },
+      // hide last border
+      '&:last-child td, &:last-child th': {
+          border: 0,
+      },
+  }));
+
   const [orders, setOrders] = useState([])
     useEffect(()=> {
         fetchOrders().then(o=> {
@@ -21,13 +42,13 @@ export default function Orders() {
 
   function OrderItem(props) {
     return (
-        <TableRow>
-            <TableCell component="th" scope="row">{props.date}</TableCell>
-            <TableCell component="th" scope="row">{props.name}</TableCell>
-            <TableCell component="th" scope="row">{props.accNo}</TableCell>
-            <TableCell component="th" scope="row">{props.count}</TableCell>
-            <TableCell component="th" scope="row">${props.price}</TableCell>
-        </TableRow>
+        <StyledTableRow>
+            <StyledTableCell component="th" scope="row">{props.date}</StyledTableCell>
+            <StyledTableCell component="th" scope="row">{props.name}</StyledTableCell>
+            <StyledTableCell component="th" scope="row">{props.accNo}</StyledTableCell>
+            <StyledTableCell component="th" scope="row">{props.count}</StyledTableCell>
+            <StyledTableCell component="th" scope="row">${props.price}</StyledTableCell>
+        </StyledTableRow>
     )
   }
   return (
@@ -37,13 +58,13 @@ export default function Orders() {
       (orders && orders.length > 0)?
       <Table size="small">
         <TableHead>
-          <TableRow>
-            <TableCell>Date</TableCell>
-            <TableCell>Drug Name</TableCell>
-            <TableCell>Bank Account No</TableCell>
-            <TableCell>Number of Items</TableCell>
-            <TableCell align="right">Total Price</TableCell>
-          </TableRow>
+          <StyledTableRow>
+            <StyledTableCell>Date</StyledTableCell>
+            <StyledTableCell>Drug Name</StyledTableCell>
+            <StyledTableCell>Bank Account No</StyledTableCell>
+            <StyledTableCell>Number of Items</StyledTableCell>
+            <StyledTableCell align="right">Total Price</StyledTableCell>
+          </StyledTableRow>
         </TableHead>
         <TableBody>
           {
