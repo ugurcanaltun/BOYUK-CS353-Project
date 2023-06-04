@@ -10,20 +10,22 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { fetchPharmacyMedicines } from "../api/PharmacyAPI";
+import { fetchUserInfo } from "../api/UserAPI";
 
 export default function ViewMedicinesScreen() {
     const [rows, setRows] = useState([])
 
     useEffect(() => {
-        axios.post(BASE_URL+"/drug/drugToCount", {"pharm_id": 1}).then(
-                function (response) {
-                    console.log(response.data);
-                    setRows(response.data);
-                }
-            ).catch(function (error) {
-                console.log(error);
-            });
-        }, [])
+        let pharmId
+        fetchUserInfo().then(i=>{
+            pharmId = i.pharmacy_id
+            fetchPharmacyMedicines(pharmId).then(r=>{
+                setRows(r);
+            })
+        })
+        
+    }, [])
 
     return(
         <Box sx={{ flexGrow: 1, width: '100%' }}>

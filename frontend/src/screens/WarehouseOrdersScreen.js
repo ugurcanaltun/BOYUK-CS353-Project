@@ -10,6 +10,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { fetchUserInfo } from "../api/UserAPI";
 
 export default function WareHouseOrdersScreen() {
 
@@ -36,9 +37,13 @@ export default function WareHouseOrdersScreen() {
     const [rows, setRows] = useState([])
 
     useEffect(() => {
-        fetchWarehouseOrders().then(b => {
-            console.log(b)
-            setRows(b)
+        let warehouseId
+        fetchUserInfo().then(i=>{
+            warehouseId = i.warehouse_id
+            fetchWarehouseOrders(warehouseId).then(b => {
+                console.log(b)
+                setRows(b)
+            })
         })
     }, [])
 
