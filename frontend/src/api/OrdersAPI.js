@@ -13,11 +13,13 @@ export async function fetchOrders()  {
     }
 }
 
-export async function completeOrder() {
+export async function completeOrder(pharmId) {
     let TCK = localStorage.getItem("userTCK")
+    console.log(pharmId)
     try {
         const response = await axios.post(BASE_URL + "/drug/orderDrug",{
-          "patient_TCK": TCK
+          "patient_TCK": TCK,
+          "pharm_id": pharmId
         })
         return response.data;
       } catch (error) {

@@ -1,4 +1,4 @@
-import { Alert, Button, Card, Snackbar, ToggleButton } from "@mui/material";
+import { Alert, Autocomplete, Button, Card, Snackbar, TextField, ToggleButton } from "@mui/material";
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -22,6 +22,7 @@ import { setBankAccountActive } from "../api/BankAPI";
 import { fetchUserInfo } from "../api/UserAPI";
 import { completeOrder } from "../api/OrdersAPI";
 import { useNavigate  } from 'react-router-dom';
+import { fetchPharmacies } from "../api/AdminAPI";
 
 export default function CheckoutScreen() {
     const [cartList, setCartList] = useState([]);
@@ -32,9 +33,12 @@ export default function CheckoutScreen() {
     const [totalPrice, setTotalPrice] = useState(0)
     const [snackOpen, setSnackOpen] = useState(false)
     const [snackText, setSnackText] = useState("")
+    const [pharmacies, setPharmacies] = useState([])
+    const [selectedPharmacy, setSelectedPharmacy] = useState(-1)
     const navigate = useNavigate();
-
+    
     useEffect(() => {
+        console.log("sikiş")
         fetchCart().then(c => {
             setCartList(c)
             setNumOfItems(0)
@@ -53,10 +57,13 @@ export default function CheckoutScreen() {
         fetchUserInfo().then(u=> {
             setAddress(u.address)
         })
+        fetchPharmacies().then(p=>{
+            setPharmacies(p)
+        })
     }, [])
 
     function complete() {
-        completeOrder().then(result=>{
+        completeOrder(selectedPharmacy).then(result=>{
             if (result.status === "success") {
                 navigate('/home/ordercompleted');
             }
@@ -70,7 +77,7 @@ export default function CheckoutScreen() {
     function handleSnackClose() {
         setSnackOpen(false)
     }
-
+    
     function ChangeAccountWindow() {
         function handleClose() {
             setChangeAccountOpen(false)
@@ -144,6 +151,22 @@ export default function CheckoutScreen() {
                     }
                     <Button onClick={e=>setChangeAccountOpen(true)} variant="contained">Change</Button>
                 </div>
+                <div>
+                    <h4>Select Pharmacy</h4>
+                    <Autocomplete
+                    disablePortal
+                    id="combo-box-demo"
+                    getOptionLabel={(p) => p.pharm_name}
+                    onChange={(event, newInputValue) => {
+                        newInputValue?
+                        setSelectedPharmacy(newInputValue.pharmacy_id):
+                        setSelectedPharmacy(-1)
+                    }}
+                    options={pharmacies}
+                    sx={{ width: 300 }}
+                    renderInput={(params) => <TextField {...params} label="Pharmacies" />}
+                    />
+                </div>
                 <h4>List of Items</h4>
                 <TableContainer component={Paper}>
                     <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -174,7 +197,7 @@ export default function CheckoutScreen() {
                 <h3>Order Summary</h3>
                 <p>Number of Drugs: {numOfItems}</p>
                 <p>Total Price: ${totalPrice}</p>
-                <Button onClick={complete} variant="contained">Buy Now</Button>
+                <Button onClick={complete} disabled={selectedPharmacy === -1} variant="contained">Buy Now</Button>
             </Card>
             <ChangeAccountWindow />
             <Snackbar open={snackOpen} autoHideDuration={4000} onClose={handleSnackClose} anchorOrigin={{ vertical:"bottom",horizontal:"right" }}>

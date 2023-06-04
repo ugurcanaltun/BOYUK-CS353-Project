@@ -7,7 +7,6 @@ export const cartAdd = async (drugName, pharmacyId) => {
       const response = await axios.post(BASE_URL + "/cart/addToCart",{
         "patient_TCK": TCK,
         "drug_name": drugName,
-        "pharm_id": pharmacyId
       })
       console.log(response.data);
     } catch (error) {
@@ -21,7 +20,6 @@ export async function cartRemove(drugName, pharmacyId) {
     const response = await axios.post(BASE_URL + "/cart/removeFromCart",{
       "patient_TCK": TCK,
       "drug_name": drugName,
-      "pharm_id": pharmacyId
     })
     console.log(response.data);
   } catch (error) {

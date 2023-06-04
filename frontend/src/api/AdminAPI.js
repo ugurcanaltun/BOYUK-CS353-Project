@@ -23,6 +23,10 @@ export async function deleteHospital(hospId) {
       }
 }
 
+export async function fetchHospitals() {
+
+}
+
 export async function addPharmacy(id, name, city) {
     try {
         const response = await axios.post(BASE_URL + "/pharmacy/add", {
@@ -45,6 +49,15 @@ export async function deletePharmacy(id) {
       }
 }
 
+export async function fetchPharmacies() {
+  try {
+    const response = await axios.get(BASE_URL + "/pharmacy/all")
+    return response.data
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 export async function deleteUser(TCK) {
     try {
         const response = await axios.delete(BASE_URL + "/user/delete/" + TCK)
@@ -52,6 +65,10 @@ export async function deleteUser(TCK) {
       } catch (error) {
         console.error(error);
       }
+}
+
+export async function fetchUsers() {
+
 }
 
 export async function addWarehouse(id, name, city) {
@@ -74,4 +91,8 @@ export async function deleteWarehouse(id) {
       } catch (error) {
         console.error(error);
       }
+}
+
+export async function fetchWarehouses() {
+
 }
