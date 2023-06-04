@@ -45,7 +45,7 @@ export default function Chart() {
             drugAnal?
             <div className='anal-item-order-count' >
               <h5>You ordered</h5>
-              {drugAnal.drug_name}
+              {drugAnal.drug_name + " "} 
               {drugAnal.order_count ?
               drugAnal.order_count :
               0} times
@@ -55,7 +55,7 @@ export default function Chart() {
             moneyAnal?
             <div className='anal-item-average'>
               <h5>Your monthly average spending</h5>
-              {moneyAnal.average_spent}
+              ${moneyAnal.average_spent}
             </div>: null
           }
           

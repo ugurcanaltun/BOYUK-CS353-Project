@@ -78,7 +78,7 @@ export default function AddNewDrugScreen() {
                             required
                             fullWidth
                             id="drugClass"
-                            label="Enter Drug Class"
+                            label="Enter Drug Company"
                             name="drugClass"
                             autoComplete="drugClass"
                             autoFocus
