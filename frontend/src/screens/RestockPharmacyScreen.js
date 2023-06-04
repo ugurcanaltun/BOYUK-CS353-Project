@@ -13,6 +13,7 @@ import Select from '@mui/material/Select';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BASE_URL } from "../api/BaseURL"; 
 import axios from "axios";
+import { fetchUserInfo } from "../api/UserAPI";
 
 const defaultTheme = createTheme();
 
@@ -43,20 +44,25 @@ export default function RestockPharmacyScreen() {
     async function handleSubmit(event){
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        let veri = {
-            "pharm_id": 1,
-            "warehouse_id": warehouseId,
-            "drug_name": drugName,
-            "drug_count": data.get("drugAmount")
-        }
-        axios.post(BASE_URL+ "/drug/restockDrug", veri).then(
-            function (response) {
-                console.log(response);
-            }
-        ).catch(function (error) {
-            console.log(error);
-        });
-
+        let pharmId
+        
+        fetchUserInfo().then(i=>{
+            pharmId = i.pharmacy_id
+            axios.post(BASE_URL+ "/drug/restockDrug", {
+                "pharm_id": pharmId,
+                "warehouse_id": warehouseId,
+                "drug_name": drugName,
+                "drug_count": data.get("drugAmount")
+            }).then(
+                function (response) {
+                    console.log(response);
+                }
+            ).catch(function (error) {
+                console.log(error);
+            });
+    
+        })
+        
     };
 
     return (

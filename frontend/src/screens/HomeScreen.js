@@ -37,7 +37,7 @@ export default function HomeScreen() {
       navigate('/home/warehouseorders');
     }
     else if (role === "pharmacist") {
-      navigate('/home/warehouseorders');
+      navigate('/home/viewmedicines');
     }
     else if (role === "admin") {
       navigate('/home/admin');
