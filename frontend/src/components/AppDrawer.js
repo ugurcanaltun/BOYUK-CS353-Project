@@ -17,6 +17,7 @@ import MedicationIcon from '@mui/icons-material/Medication';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import LocalPharmacyIcon from '@mui/icons-material/LocalPharmacy';
 import HomeIcon from '@mui/icons-material/Home';
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { Link } from 'react-router-dom';
 import { Button } from '@mui/material';
 import { logout } from '../api/UserAPI';
@@ -126,13 +127,19 @@ export default function AppDrawer(props) {
         id: 1,
         label: "List Medicines",
         icon: (<ShoppingCartIcon sx={{ color: '#1976d2' }}/>),
-        link: "listmedicines",
+        link: "viewmedicines",
       },
       {
         id: 2,
         label: "Add New Drug",
         icon: (<MedicationIcon sx={{ color: '#1976d2' }}/>),
         link: "addnewdrug",
+      },
+      {
+        id:3,
+        label: "Restock Drug",
+        icon: (<RefreshIcon sx={{ color: '#1976d2' }}/>),
+        link: "restock",
       }
     ]
   }
