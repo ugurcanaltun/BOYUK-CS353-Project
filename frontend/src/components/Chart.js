@@ -45,7 +45,7 @@ export default function Chart() {
             drugAnal?
             <div className='anal-item-order-count' >
               <h5>You ordered</h5>
-              {drugAnal.drug_name + " "} 
+              {drugAnal.drug_name?drugAnal.drug_name + " ": ""} 
               {drugAnal.order_count ?
               drugAnal.order_count :
               0} times
